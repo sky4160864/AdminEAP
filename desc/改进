@@ -1,0 +1,16 @@
+#.用户删不掉
+#.组织结构删不掉
+#.代码生成器：生成xml不生成(ok,com.cnpc.framework.base.controller.CodeGeneratorController)
+    html文件路径  E:\Program Files\gitProject\AdminEAP\AdminEAP-web\src\main\webapp\WEB-INF\views
+    Java文件路径  E:\Program Files\gitProject\AdminEAP\AdminEAP-web\src\main\java\com\cnpc\
+#.主页面tab
+#.动态列表
+
+
+
+##要注意的地方
+#.entity字段为double生成的.xml有问题，即使修改后也无法生成view需要改
+#.Dict问题
+    EntInfo中@Header(name="地区",joinClass = Dict.class,dataSource="AREA")
+    com.cnpc.framework.base.service.impl.DictServiceImpl中50开始，只能取下一级
+

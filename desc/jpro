@@ -1,0 +1,27 @@
+jpro项目：
+数据:mn,inf,datatime，超时清除需要mn
+菜单，base,按权限展示
+日月数据是下位机算的，还是上位机算的
+主从复制
+因子表，可配（固定），选择时快速匹配
+因子不确定如何汇总报表
+ST分类，挂企业还是挂mn(感觉企业)
+ST表，固定（全录，可见）
+企业关联mn,mn关联因子，因子配上下限
+企业id,name,地址，经纬
+企业关联地区，关联部门，部门关联人
+
+协议复杂
+
+
+#代码生成器路径配置
+html文件
+    E:\Program Files\gitProject\AdminEAP\AdminEAP-web\src\main\webapp\WEB-INF\views\jpro
+Java文件
+    E:\Program Files\gitProject\AdminEAP\AdminEAP-web\src\main\java\com\cnpc\jpro
+
+
+#指定库 忽略表
+mysqldump -uroot -p1234 -h127.0.0.1 --databases admineap > e:/admineap.db
+恢复
+mysql -uroot -p1234 -h127.0.0.1 < e:/dbdump.db

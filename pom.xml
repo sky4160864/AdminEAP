@@ -8,6 +8,7 @@
     <modules>
         <module>AdminEAP-framework</module>
         <module>AdminEAP-web</module>
+        <module>AdminEAP-web-yw</module>
     </modules>
     <name>AdminEAP</name>
     <url>http://www.admineap.com</url>

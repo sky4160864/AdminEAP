@@ -9,10 +9,7 @@ import com.cnpc.framework.base.pojo.Result;
 import com.cnpc.framework.base.service.CodeGeneratorService;
 import com.cnpc.framework.query.entity.Query;
 import com.cnpc.framework.query.pojo.QueryDefinition;
-import com.cnpc.framework.utils.DateUtil;
-import com.cnpc.framework.utils.FreeMarkerUtil;
-import com.cnpc.framework.utils.PingYinUtil;
-import com.cnpc.framework.utils.StrUtil;
+import com.cnpc.framework.utils.*;
 import freemarker.template.TemplateException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -102,11 +99,15 @@ public class CodeGeneratorController {
             htmlDir += (i < level.length - 1) ? level[i] + File.separator : level[i];
         }
         setting.setBusinessPackage(htmlDir.replace(File.separator, "/"));
-        //request.getSession().getServletContext().getRealPath("/");
+        request.getSession().getServletContext().getRealPath("/");
         String htmlPath = realPath + File.separator + "WEB-INF"
                 + File.separator + "views" + File.separator + htmlDir;
         String javaPath = realPath.replaceAll("webapp", "java") + File.separator
                 + setting.getNameSpace().replace(".", File.separator);
+        //String htmlPath = PropertiesUtil.getValue("generator_view_path")+File.separator + htmlDir;
+        //String javaPath = PropertiesUtil.getValue("generator_view_path")+File.separator + htmlDir;
+        System.out.println("htmlPath:"+htmlPath);
+        System.out.println("javaPath:"+javaPath);
         setting.setHtmlPath(htmlPath);
         setting.setJavaPath(javaPath);
 
@@ -153,8 +154,12 @@ public class CodeGeneratorController {
     @RequestMapping(value = "generateXMLFile",method = RequestMethod.POST)
     @ResponseBody
     public Result generateXMLFile(String xmlContent, String xmlFile, HttpServletRequest request) {
-        String xmlPath = request.getRealPath("/").replaceAll("webapp", "resources") + File.separator + "query"
-                + File.separator + xmlFile;
+        //String xmlPath = request.getRealPath("/").replaceAll("webapp", "resources") + File.separator + "query"
+        //        + File.separator + xmlFile;
+        //E:\Program Files\gitProject\AdminEAP\AdminEAP-web\src\main\resources\query
+        String xmlPath = PropertiesUtil.getValue("generator_xml_path")+File.separator+xmlFile; //add_hjh_20290103
+        xmlPath = xmlPath.replaceAll("\\\\","/");
+        System.out.println("xmlPath:"+xmlPath);
         String rn = "\r\n";
         try {
             File file = new File(xmlPath);

@@ -7,14 +7,14 @@
 		<column key="rowIndex" header="序号" width="50" allowSort="false"/>
 		<column key="id" header="id" hidden="true"/>
 		<column key="version" header="version" hidden="true"/>
-		<column key="name" header="姓名" operator="like" width="100" allowSort="true" />
-		<column key="deptId" header="所在部门" align="left" width="100" fnRender="fnRenderDept"/>
-		<column key="sex" header="性别" operator="eq" width="150" allowSort="true" render="1=男,0=女" />
-		<column key="birthday" header="出生年月" operator="like" width="80" allowSort="true" dateFormat="yyyy-mm-dd" />
 		<column key="loginName" header="登录名" operator="like" width="80" allowSort="true" />
-		<column key="email" header="邮箱" align="left" operator="eq" width="100"  />
+		<column key="name" header="姓名" operator="like" width="100" allowSort="true" />
 		<column key="mobile" header="手机" operator="eq" width="200" align="center"/>
-	    <column key="qq" header="QQ" operator="eq" width="200" align="center" />
+		<column key="deptId" header="所在部门" align="left" width="100" fnRender="fnRenderDept"/>
+		<column key="sex" header="性别" hidden="true" operator="eq" width="150" allowSort="true" render="1=男,0=女" />
+		<column key="birthday" header="出生年月" hidden="true" operator="like" width="80" allowSort="true" dateFormat="yyyy-mm-dd" />
+		<column key="email" header="邮箱" align="left" hidden="true" operator="eq" width="100"  />
+	    <column key="qq" header="QQ" hidden="true" operator="eq" width="200" align="center" />
 	</query>
 
 
