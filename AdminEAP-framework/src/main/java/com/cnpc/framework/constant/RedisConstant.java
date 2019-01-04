@@ -38,6 +38,7 @@ public class RedisConstant {
      * 字典缓存前缀
      */
     public static final String DICT_PRE = "dict:";
+    public static final String ST_PRE = "st:";
 
     /**
      * 组织机构缓存前缀

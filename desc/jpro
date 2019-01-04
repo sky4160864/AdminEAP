@@ -25,3 +25,15 @@ Java文件
 mysqldump -uroot -p1234 -h127.0.0.1 --databases admineap > e:/admineap.db
 恢复
 mysql -uroot -p1234 -h127.0.0.1 < e:/dbdump.db
+
+
+#因子编号表导入（水、气）
+1.修改id为Int并设置自增长，导入factor.7z
+2.更新 update jp_factor a set a.data_type=a.unit_em,a.unit_em ='' where a.data_type ='' and a.unit_em like 'N%'
+3.检测 select * from jp_factor a where a.data_type not like 'N%'
+4.(不用，看错了)拆分code update jp_factor set code_type=SUBSTR(code,1,1),code_mn=SUBSTR(code,2)
+
+
+
+http://10.33.106.191:8080/zxjk3/login.jsp
+spwqjyzx  jyzx@123

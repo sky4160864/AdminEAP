@@ -4,13 +4,16 @@ import com.cnpc.framework.annotation.Header;
 import com.cnpc.framework.base.entity.BaseEntity;
 import com.cnpc.framework.base.entity.Dict;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="jp_ent_info")
 public class EntInfo extends BaseEntity {
+
+    @Header(name = "系统编码")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "st_code")
+    private StCode stCode;
 
     @Header(name="企业名称")
     @Column(name="name")
@@ -84,5 +87,13 @@ public class EntInfo extends BaseEntity {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public StCode getStCode() {
+        return stCode;
+    }
+
+    public void setStCode(StCode stCode) {
+        this.stCode = stCode;
     }
 }

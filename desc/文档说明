@@ -1,0 +1,3 @@
+<select name="stCode.id" id="stCode.id" data-code="true" data-flag="stSelector" data-placeholder="请选择系统编码" class="form-control select2" style="width:100%" data-blank="true"></select>
+data-flag="stSelector"为控件名，新添加的话需要在base-form.js添加
+data-code="true"为查询数据，stcode全部查询，随意设置true，后台public List<StCode> getStByCode(String code)会过滤code参数

@@ -28,6 +28,40 @@
         return dict;
     };
 
+    BaseDataSource.prototype.getStList = function(code) {
+        // console.log("getStList->code:"+code);
+        var st = null;
+        var obj = {
+            "code" : code
+        };
+        $.ajax({
+            type : "post",
+            async : false,
+            url : basePath+"/stcode/getStByCode",
+            data : obj,
+            dataType : "json",
+            success : function(data) {
+                st = data;
+            },
+            error : function() {
+                modals.error("系统编号" + code + "获取异常,请检查");
+            }
+        });
+        return st;
+    };
+
+    /**
+     * stCode 系统编码 callback 回调函数
+     */
+    BaseDataSource.prototype.getSt = function(stCode, callback) {
+        if (!stCode)
+            return null;
+        var st = this.getStList(stCode);
+        if (st && st.length > 0&&callback) {
+            callback(st);
+        }
+    };
+
     /**
      * dictCode 字典编码 callback 回调函数
      */

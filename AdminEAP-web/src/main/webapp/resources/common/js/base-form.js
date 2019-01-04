@@ -23,6 +23,7 @@
         //datetimepicker
         this.datetimepickerElement = "[data-flag='datetimepicker']";
         //selector
+        this.stSelectorElement = "[data-flag='stSelector']";
         this.dictSelectorElement = "[data-flag='dictSelector']";
         this.urlSelectorElement = "[data-flag='urlSelector']";
         this.select2Element = ".select2";
@@ -41,7 +42,8 @@
         this.initDictSelector();
         //urlSelector
         this.initUrlSelector();
-
+        //stSelector
+        this.initStSelector();
     }
 
     //主要解决icheck 校验对勾错位的问题
@@ -144,6 +146,36 @@
     }
 
     /**
+     * 系统编码的控件 add_hjh_20190104
+     */
+    BaseForm.prototype.initStSelector = function (stSelectorElement) {
+        var _this = this;
+        var element = stSelectorElement ? stSelectorElement : this.stSelectorElement;
+        var elements = this.$element.find(element);
+        $(elements).each(function (index, item) {
+            var code = $(item).data("code");
+            var autoload = $(item).data("autoload") == "false" ? false : true;
+            // console.log("initStSelector->code:"+code+"||autoload:"+autoload);
+            if (code) {
+                if (autoload) {
+                    if ($(item).is("input"))
+                        _this.buildAjaxStBox(this, code);
+                    else if ($(item).is("select"))
+                        _this.buildAjaxStSelect(this, code);
+                } else {
+                    var that = this;
+                    // console.log("initStSelector->that:"+that);
+                    $(this).click(function () {
+                        _this.buildAjaxStSelect(that, code);
+                    })
+                }
+            }else{
+                // console.log("initStSelector->code: ffffffffffffffffff");
+            }
+        });
+    }
+
+    /**
      * 字典类型的控件
      */
     BaseForm.prototype.initDictSelector = function (dictSelectorElement) {
@@ -195,6 +227,12 @@
         });
     }
 
+    //数据来源为系统编码的radio checkbox  add_hjh_20190104
+    BaseForm.prototype.buildAjaxStBox = function (selector, dictCode) {
+        var builder = this.buildAjaxBox(selector);
+        $dataSource.getSt(dictCode, builder);
+    }
+
     //数据来源为字典的radio checkbox
     BaseForm.prototype.buildAjaxDictBox = function (selector, dictCode) {
         var builder = this.buildAjaxBox(selector);
@@ -204,6 +242,12 @@
     BaseForm.prototype.buildAjaxUrlBox = function (selector, url) {
         var builder = this.buildAjaxBox(selector);
         $dataSource.getDataByUrl(url, builder);
+    }
+
+    //数据来源为字典的下拉框
+    BaseForm.prototype.buildAjaxStSelect = function (selector, stCode) {
+        var builder = this.buildAjaxSelector(selector);
+        $dataSource.getSt(stCode, builder);
     }
     //数据来源为字典的下拉框
     BaseForm.prototype.buildAjaxDictSelect = function (selector, dictCode) {

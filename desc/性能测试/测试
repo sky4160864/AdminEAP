@@ -1,0 +1,24 @@
+EXPLAIN select * from jp_monitor_hour
+where mtime=DATE_FORMAT('2019-01-20','%Y-%m-%d')
+#and mtime<DATE_FORMAT('2019-01-21','%Y-%m-%d')
+and mn='AAAAAAAABBBBBBBBCCCCCCCC100'
+
+EXPLAIN select b.mn, mtime,
+max(case factor_code when 'w00000' then val_avg else 0 end ) 'w00000',
+max(case factor_code when 'w01001' then val_avg else 0 end ) 'w01001',
+max(case factor_code when 'w01002' then val_avg else 0 end ) 'w01002',
+max(case factor_code when 'w01006' then val_avg else 0 end ) 'w01006',
+max(case factor_code when 'w01009' then val_avg else 0 end ) 'w01009',
+max(case factor_code when 'w01010' then val_avg else 0 end ) 'w01010',
+max(case factor_code when 'w01012' then val_avg else 0 end ) 'w01012',
+max(case factor_code when 'w01014' then val_avg else 0 end ) 'w01014',
+max(case factor_code when 'w01017' then val_avg else 0 end ) 'w01017',
+max(case factor_code when 'w01018' then val_avg else 0 end ) 'w01018',
+max(case factor_code when 'w01019' then val_avg else 0 end ) 'w01019',
+max(case factor_code when 'w01020' then val_avg else 0 end ) 'w01020',
+max(case factor_code when 'w02003' then val_avg else 0 end ) 'w02003',
+max(case factor_code when 'w02006' then val_avg else 0 end ) 'w02006'
+from jp_monitor_hour a INNER JOIN jp_station_info b USING(mn)
+where mtime=DATE_FORMAT('2019-01-20','%Y-%m-%d')
+and a.mn='AAAAAAAABBBBBBBBCCCCCCCC100'
+group by mtime,mn

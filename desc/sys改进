@@ -5,6 +5,8 @@
     Java文件路径  E:\Program Files\gitProject\AdminEAP\AdminEAP-web\src\main\java\com\cnpc\
 #.主页面tab
 #.动态列表
+#.扫描注解方式，是否为单例？
+#.数据如何显红
 
 
 
@@ -13,4 +15,6 @@
 #.Dict问题
     EntInfo中@Header(name="地区",joinClass = Dict.class,dataSource="AREA")
     com.cnpc.framework.base.service.impl.DictServiceImpl中50开始，只能取下一级
+
+
 
