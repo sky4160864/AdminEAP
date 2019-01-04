@@ -8,8 +8,8 @@ CREATE TABLE jp_monitor_hour (
   val_avg float(12,4) DEFAULT NULL COMMENT '平均值',
   val_max float(12,4) DEFAULT NULL COMMENT '最大值',
   flag_mark varchar(1) DEFAULT NULL COMMENT '数据标记',
-  #PRIMARY KEY (mid),
-  KEY jp_monitor_hour_uk (mtime,mn,factor_code)
+  PRIMARY KEY (mtime,mn,factor_code)
+  #KEY jp_monitor_hour_uk (mtime,mn,factor_code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 PARTITION BY RANGE(to_days(mtime)) (
 	PARTITION p201901 VALUES LESS THAN (to_days('2019-01-01')),
 	PARTITION p201902 VALUES LESS THAN (to_days('2019-02-01')),

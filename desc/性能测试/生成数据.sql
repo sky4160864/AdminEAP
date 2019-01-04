@@ -35,7 +35,7 @@ BEGIN
 
 					#设置起止结束日期
 					SET beg_date = DATE_FORMAT('2019-01-01', '%Y-%m-%d');
-					SET end_date = DATE_FORMAT('2019-02-01', '%Y-%m-%d');
+					SET end_date = DATE_FORMAT('2020-01-01', '%Y-%m-%d');
 					WHILE beg_date < end_date DO
 							SET beg_date = DATE_ADD(beg_date,INTERVAL 1 HOUR);
 							set bnum = bnum+1;
@@ -58,10 +58,12 @@ BEGIN
 
 	END LOOP out_loop;
 	CLOSE cur_mn;
-
 END; //
 DELIMITER;
 
+
+#ALTER TABLE jp_monitor_hour ADD PRIMARY KEY (mtime,mn,factor_code);
+#ALTER TABLE jp_monitor_hour DROP PRIMARY KEY;
 #测试 设置MOD500为7秒 #一个月用时376秒
 #truncate table jp_monitor_hour
 #select count(1) from jp_monitor_hour

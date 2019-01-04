@@ -3,6 +3,13 @@ where mtime=DATE_FORMAT('2019-01-20','%Y-%m-%d')
 #and mtime<DATE_FORMAT('2019-01-21','%Y-%m-%d')
 and mn='AAAAAAAABBBBBBBBCCCCCCCC100'
 
+#####################################################################
+#查询某个时间点【pk(mtime,mn,factor_code)】
+#####################################################################
+#单个站点0.04s pass
+#全部站点0.8s not pass
+#全部站点0.05s pass (默认没有主键，只创建了复合uk，将复合uk改成pk)【pk(mtime,mn,factor_code)】
+
 EXPLAIN select b.mn, mtime,
 max(case factor_code when 'w00000' then val_avg else 0 end ) 'w00000',
 max(case factor_code when 'w01001' then val_avg else 0 end ) 'w01001',
@@ -23,3 +30,55 @@ where mtime=DATE_FORMAT('2019-01-20','%Y-%m-%d')
 #注释后，200家企业需要1秒
 #and a.mn='AAAAAAAABBBBBBBBCCCCCCCC100'
 group by mtime,mn
+
+
+#####################################################################
+#查询单一站点，月统计【pk(mtime,mn,factor_code)】
+#####################################################################
+#单月查询用时2.5秒（2019-05-01 00至2019-05-31 23）
+#单月查询用时2.2秒（2019-05-01 00至2019-05-31 23）add nk【mn,factor_code,mtime】
+#单月查询用时0.9秒（2019-05-01 00至2019-05-31 23）add nk【mn,factor_code,mtime】【减少factor_code查询数据时间越短（7个0.9秒）】
+EXPLAIN select b.mn, mtime,
+max(case factor_code when 'w00000' then val_avg else 0 end ) 'w00000',
+max(case factor_code when 'w01001' then val_avg else 0 end ) 'w01001',
+max(case factor_code when 'w01002' then val_avg else 0 end ) 'w01002',
+max(case factor_code when 'w01006' then val_avg else 0 end ) 'w01006',
+max(case factor_code when 'w01009' then val_avg else 0 end ) 'w01009',
+max(case factor_code when 'w01010' then val_avg else 0 end ) 'w01010',
+max(case factor_code when 'w01012' then val_avg else 0 end ) 'w01012',
+max(case factor_code when 'w01014' then val_avg else 0 end ) 'w01014',
+max(case factor_code when 'w01017' then val_avg else 0 end ) 'w01017',
+max(case factor_code when 'w01018' then val_avg else 0 end ) 'w01018',
+max(case factor_code when 'w01019' then val_avg else 0 end ) 'w01019',
+max(case factor_code when 'w01020' then val_avg else 0 end ) 'w01020',
+max(case factor_code when 'w02003' then val_avg else 0 end ) 'w02003',
+max(case factor_code when 'w02006' then val_avg else 0 end ) 'w02006'
+from jp_monitor_hour a INNER JOIN jp_station_info b USING(mn)
+where a.mn='AAAAAAAABBBBBBBBCCCCCCCC100'
+#and factor_code in('w00000','w01001','w01002','w01006','w01009','w01010','w00012','w01014','w01017','w01018','w01019','w01020','w02003','w02006')
+and factor_code in('w00000','w01001','w01002','w01006','w01009','w01010')
+and mtime>=DATE_FORMAT('2019-05-01 00','%Y-%m-%d %H')
+and mtime<=DATE_FORMAT('2019-05-31 23','%Y-%m-%d %H')
+#group by mtime,mn order by mtime
+group by mn,mtime order by mtime
+
+
+
+
+
+
+flush status
+show status where VARIABLE_name like 'Handler%' or variable_name like 'Created%';
+
+select * from jp_monitor_hour where mn='AAAAAAAABBBBBBBBCCCCCCCC100' and mtime=DATE_FORMAT('2019-05-01','%Y-%m-%d')
+
+ALTER TABLE jp_monitor_hour ADD INDEX jp_monitor_hour_nk(mn,factor_code,mtime);
+ALTER TABLE jp_monitor_hour DROP INDEX jp_monitor_hour_nk;
+show create table jp_monitor_hour
+select count(1) from jp_monitor_hour  
+
+
+#指定库 忽略表
+mysqldump -uroot -p1234 -h127.0.0.1 --databases admineap --tables jp_monitor_hour  > e:/admineap.db
+恢复
+mysql -uroot -p1234 -h127.0.0.1 < e:/dbdump.db
