@@ -1,14 +1,15 @@
-#DROP TABLE IF EXISTS jp_monitor_hour;
+DROP TABLE IF EXISTS jp_monitor_hour;
 CREATE TABLE jp_monitor_hour (
   mn varchar(27) NOT NULL,
   factor_code varchar(6) NOT NULL,
   mtime datetime NOT NULL,
-  val_cou float(12,4) DEFAULT NULL COMMENT '累计值',
-  val_min float(12,4) DEFAULT NULL COMMENT '最小值',
-  val_avg float(12,4) DEFAULT NULL COMMENT '平均值',
-  val_max float(12,4) DEFAULT NULL COMMENT '最大值',
+  val_cou DECIMAL(16,6) DEFAULT NULL COMMENT '累计值',
+  val_min DECIMAL(16,6) DEFAULT NULL COMMENT '最小值',
+  val_avg DECIMAL(16,6) DEFAULT NULL COMMENT '平均值',
+  val_max DECIMAL(16,6) DEFAULT NULL COMMENT '最大值',
   flag_mark varchar(1) DEFAULT NULL COMMENT '数据标记',
-  PRIMARY KEY (mtime,mn,factor_code)
+  utime timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (mn,factor_code,mtime)
   #KEY jp_monitor_hour_uk (mtime,mn,factor_code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 PARTITION BY RANGE(to_days(mtime)) (
 	PARTITION p201901 VALUES LESS THAN (to_days('2019-01-01')),

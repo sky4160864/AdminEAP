@@ -34,10 +34,12 @@ group by mtime,mn
 
 #####################################################################
 #查询单一站点，月统计【pk(mtime,mn,factor_code)】
+#注意：关联表，第二个需要索引所以a表应为第二个表。（测试发现，即使a表在前，优化器也会自动调整a表为第二个表）
 #####################################################################
 #单月查询用时2.5秒（2019-05-01 00至2019-05-31 23）
 #单月查询用时2.2秒（2019-05-01 00至2019-05-31 23）add nk【mn,factor_code,mtime】
 #单月查询用时0.9秒（2019-05-01 00至2019-05-31 23）add nk【mn,factor_code,mtime】【减少factor_code查询数据时间越短（7个0.9秒）】
+#单月查询用时0.08秒（2019-05-01 00至2019-05-31 23）改变主键pk【mn,factor_code,mtime】5☆☆☆☆☆
 EXPLAIN select b.mn, mtime,
 max(case factor_code when 'w00000' then val_avg else 0 end ) 'w00000',
 max(case factor_code when 'w01001' then val_avg else 0 end ) 'w01001',
@@ -53,14 +55,30 @@ max(case factor_code when 'w01019' then val_avg else 0 end ) 'w01019',
 max(case factor_code when 'w01020' then val_avg else 0 end ) 'w01020',
 max(case factor_code when 'w02003' then val_avg else 0 end ) 'w02003',
 max(case factor_code when 'w02006' then val_avg else 0 end ) 'w02006'
+from jp_station_info b INNER JOIN jp_monitor_hour a USING(mn)
+where
+a.mn='AAAAAAAABBBBBBBBCCCCCCCC100'
+and factor_code in('w00000','w01001','w01002','w01006','w01009','w01010','w00012','w01014','w01017','w01018','w01019','w01020','w02003','w02006')
+#and factor_code in('w00000','w01001','w01002','w01006','w01009','w01010')
+and mtime>=DATE_FORMAT('2019-01-01 00','%Y-%m-%d %H')
+and mtime<=DATE_FORMAT('2019-01-31 23','%Y-%m-%d %H')
+group by mn,mtime
+order by mn,factor_code,mtime
+
+
+select * from jp_monitor_hour  #
+where mn='AAAAAAAABBBBBBBBCCCCCCCC100' and factor_code ='w00000'
+and mtime = date_format('2019-01-01 01','%Y-%m-%d %H')
+
+
+EXPLAIN select count(1)
 from jp_monitor_hour a INNER JOIN jp_station_info b USING(mn)
-where a.mn='AAAAAAAABBBBBBBBCCCCCCCC100'
-#and factor_code in('w00000','w01001','w01002','w01006','w01009','w01010','w00012','w01014','w01017','w01018','w01019','w01020','w02003','w02006')
-and factor_code in('w00000','w01001','w01002','w01006','w01009','w01010')
-and mtime>=DATE_FORMAT('2019-05-01 00','%Y-%m-%d %H')
+where
+mtime>=DATE_FORMAT('2019-05-01 00','%Y-%m-%d %H')
 and mtime<=DATE_FORMAT('2019-05-31 23','%Y-%m-%d %H')
-#group by mtime,mn order by mtime
-group by mn,mtime order by mtime
+and a.mn='AAAAAAAABBBBBBBBCCCCCCCC100'
+#and factor_code in('w00000','w01001','w01002','w01006','w01009','w01010','w00012','w01014','w01017','w01018','w01019','w01020','w02003','w02006')
+and factor_code ='w00000'
 
 
 
