@@ -57,6 +57,7 @@ BEGIN
 
       END LOOP out_loop;
       CLOSE cur_mn;
+      SET done=0;-- 注意这里（重点）
       SET beg_date = DATE_ADD(beg_date,INTERVAL 1 HOUR);
   END WHILE;
 END; //

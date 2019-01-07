@@ -1,0 +1,93 @@
+<!-- 以下代码为代码生成器生成，生成时间: 2019-01-03 15:29:33，作者：billjiang/475572229@qq.com-->
+<section class="content-header">
+    <h1>
+        系统编码管理
+        <small>列表</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="${basePath}"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">系统管理</a></li>
+        <li class="active">系统编码管理</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="dataTables_filter" id="searchDiv" style="display: none">
+                    <!--查询条件-->
+                    <input type="search" placeholder="请输入系统名称" title="系统名称" name="name"
+                                           class="form-control" id="name" operator="like" likeOption="true">
+                    <input type="search" placeholder="请输入系统编号" title="系统编码" name="code"
+                                           class="form-control" id="code" operator="like" likeOption="true">
+                     <label class="control-label"> <input type="radio" name="enable" data-flag="icheck" class="square-green" value="true"> 是</label> &nbsp;
+                     <label class="control-label"> <input type="radio" name="enable" data-flag="icheck" class="square-green" value="false"> 否</label>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" data-btn-type="search">查询</button>
+                        <button type="button" class="btn btn-default" data-btn-type="reset">重置</button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" data-btn-type="add">新增</button>
+                        <button type="button" class="btn btn-default" data-btn-type="edit">编辑</button>
+                        <button type="button" class="btn btn-default" data-btn-type="delete">删除</button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <table id="stcode_table" class="table table-bordered table-striped table-hover">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    var stcodeTable, winId = "stcodeWin";
+    $(function (){
+        stcodeTable = new CommonTable("stcode_table", "jp_st_code", "searchDiv", null);
+        //绑定按钮事件
+        $("button[data-btn-type]").click(function () {
+            var action = $(this).data("btn-type");
+            var rowId = stcodeTable.getSelectedRowId();
+            switch (action) {
+                case "add":
+                    modals.openWin({
+                        winId: winId,
+                        title: '新增系统编码',
+                        width: "900px",
+                        url: basePath + "/stcode/edit"
+                    })
+                    break;
+                case "edit":
+                    if (!rowId) {
+                        modals.info('请选择要编辑的行');
+                        return false;
+                    }
+                    modals.openWin({
+                        winId: winId,
+                        title: '编辑系统编码【' + stcodeTable.getSelectedRowData().name + '】',
+                        width: '900px',
+                        url: basePath + "/stcode/edit?id=" + rowId
+                    });
+                    break;
+                case 'delete':
+                    if (!rowId) {
+                        modals.info('请选择要删除的行');
+                        return false;
+                    }
+                    modals.confirm("是否要删除该行数据？", function () {
+                        ajaxPost(basePath + "/stcode/delete/" + rowId, null, function (data) {
+                            if (data.success) {
+                                stcodeTable.reloadRowData();
+                            } else {
+                                modals.info("系统编码数据被引用，不可删除！");
+                            }
+                        });
+                    })
+                    break;
+            }
+        })
+    })
+</script>

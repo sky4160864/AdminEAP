@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queryContext xmlns="http://www.example.org/query" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/query query.xsd">
+<!--本xml片段为代码生成器生成，时间：2019-01-03 12:29:00-->
+
+<!--关联tbl_dist把area_code变成dist表中name 别名为entity中字段名，需要符合驼峰规则-->
+<query id="jp_ent_info" key="id" tableName="站点列表" className="com.cnpc.jpro.entity.EntInfo" widthType="px">
+        <sql><![CDATA[
+			  select a.id,a.name,a.address,a.lat,a.lng,b.name areaCode,a.remark
+			  from jp_ent_info a
+			  left join tbl_dict b on a.area_code=b.id
+              where 1=1
+			]]>
+        </sql>
+        <column key="rowIndex" header="序号" width="80"/>
+        <!--<column key="stCode.name" header="系统编码" width="150"/>-->
+        <column key="name" header="站点名称" classType="String" allowSort="true" width="150"/>
+        <column key="address" header="地址" classType="String" allowSort="true" width="150"/>
+        <column key="lat" header="经度" classType="String" allowSort="true" width="150"/>
+        <column key="lng" header="纬度" classType="String" allowSort="true" width="150"/>
+        <column key="areaCode" header="地区" classType="String" allowSort="true" width="150"/>
+        <column key="remark" header="备注" classType="String" allowSort="true" width="150"/>
+</query>
+
+
+<!--本xml片段为代码生成器生成，时间：2019-01-03 15:23:24-->
+<query id="jp_st_code" key="id" tableName="系统编码列表" className="com.cnpc.jpro.entity.StCode" widthType="px">
+        <column key="rowIndex" header="序号" width="80"/>
+        <column key="name" header="系统名称" classType="String" allowSort="true" width="150"/>
+        <column key="code" header="系统编号" classType="String" allowSort="true" width="150"/>
+        <column key="enable" header="是否启用" classType="Boolean" allowSort="true" width="150" render="true=是,false=否"/>
+        <column key="remark" header="备注" classType="String" allowSort="true" width="150"/>
+</query>
+
+
+<!--本xml片段为代码生成器生成，时间：2019-01-03 16:48:12-->
+<query id="jp_factor" key="id" tableName="因子编码表列表" className="com.cnpc.jpro.entity.Factor" widthType="px">
+        <column key="rowIndex" header="序号" width="80"/>
+        <column key="code" header="编码" classType="String" allowSort="true" width="150"/>
+        <column key="nameZh" header="中文名称" classType="String" allowSort="true" width="150"/>
+        <column key="codeOld" header="原编码" classType="String" allowSort="true" width="150"/>
+        <column key="unitCon" header="缺省计量单位（浓度）" classType="String" allowSort="true" width="150"/>
+        <column key="unitEm" header="缺省计量单位（排放量）" classType="String" allowSort="true" width="150"/>
+        <column key="dataType" header="缺省数据类型" classType="String" allowSort="true" width="150"/>
+</query>
+</queryContext>
