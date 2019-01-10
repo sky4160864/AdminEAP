@@ -120,6 +120,7 @@
             "fnInitComplete": $.proxy(that.fnInitComplete, that),
             "singleSelect": true,  //单选
             "aoColumns": columns
+            // "retrieve":true //add_hjh_20190110 waterhour_list.html选择企业时出错
 
         }, that.config));
 
@@ -450,6 +451,7 @@
             sortInfo: dataCache.data("sortInfo"),
             conditions: this.fnGetConditions(this.searchDiv)
         };
+        // console("reqParam:",reqParam);
         dataCache.data("pageInfo", pageInfo);
         var retData = null;
         //console.log("reqObj:");

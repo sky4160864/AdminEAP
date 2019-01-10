@@ -3,7 +3,7 @@
 <!--本xml片段为代码生成器生成，时间：2019-01-03 12:29:00-->
 
 <!--关联tbl_dist把area_code变成dist表中name 别名为entity中字段名，需要符合驼峰规则-->
-<query id="jp_ent_info" key="id" tableName="站点列表" className="com.cnpc.jpro.entity.EntInfo" widthType="px">
+<!--<query id="jp_ent_info" key="id" tableName="站点列表" className="com.cnpc.jpro.entity.StationInfo" widthType="px">
         <sql><![CDATA[
 			  select a.id,a.name,a.address,a.lat,a.lng,b.name areaCode,a.remark
 			  from jp_ent_info a
@@ -12,14 +12,14 @@
 			]]>
         </sql>
         <column key="rowIndex" header="序号" width="80"/>
-        <!--<column key="stCode.name" header="系统编码" width="150"/>-->
+        &lt;!&ndash;<column key="stCode.name" header="系统编码" width="150"/>&ndash;&gt;
         <column key="name" header="站点名称" classType="String" allowSort="true" width="150"/>
         <column key="address" header="地址" classType="String" allowSort="true" width="150"/>
         <column key="lat" header="经度" classType="String" allowSort="true" width="150"/>
         <column key="lng" header="纬度" classType="String" allowSort="true" width="150"/>
         <column key="areaCode" header="地区" classType="String" allowSort="true" width="150"/>
         <column key="remark" header="备注" classType="String" allowSort="true" width="150"/>
-</query>
+</query>-->
 
 
 <!--本xml片段为代码生成器生成，时间：2019-01-03 15:23:24-->
@@ -41,5 +41,105 @@
         <column key="unitCon" header="缺省计量单位（浓度）" classType="String" allowSort="true" width="150"/>
         <column key="unitEm" header="缺省计量单位（排放量）" classType="String" allowSort="true" width="150"/>
         <column key="dataType" header="缺省数据类型" classType="String" allowSort="true" width="150"/>
+</query>
+
+
+<!--本xml片段为代码生成器生成，时间：2019-01-10 09:45:23-->
+<!--关联tbl_dist把area_code变成dist表中name 别名为entity中字段名，需要符合驼峰规则-->
+        <!--select c.name stCode, a.id,a.name,a.mn,a.address,a.lat,a.lng,b.name areaCode,a.remark
+        from jp_ent_info a
+        left join tbl_dict b on(a.area_code=b.id)
+        left join jp_st_code c on(a.st_code=c.id)
+        where 1=1-->
+<query id="jp_station_info" key="id" tableName="站点信息列表" className="com.cnpc.jpro.entity.StationInfo" widthType="px">
+        <sql><![CDATA[
+                select a.id,a.name,a.mn,a.address,a.lat,a.lng,b.name areaCode,a.remark,c.name stCode
+                from jp_station_info a
+                left join tbl_dict b on(a.area_code=b.id)
+                left join jp_st_code c on(a.st_code=c.id)
+                where 1=1
+			]]>
+        </sql>
+        <column key="rowIndex" header="序号" width="80"/>
+        <column key="stCode" header="系统编码" classType="String" allowSort="true" width="150" />
+        <column key="name" header="企业名称" classType="String" allowSort="true" width="150"/>
+        <column key="mn" header="设备唯一标识" classType="String" allowSort="true" width="150"/>
+        <column key="address" header="地址" classType="String" allowSort="true" width="150"/>
+        <column key="lat" header="经度" classType="String" allowSort="true" width="150"/>
+        <column key="lng" header="纬度" classType="String" allowSort="true" width="150"/>
+        <column key="areaCode" header="地区" classType="String" allowSort="true" width="150"/>
+        <column key="remark" header="备注" classType="String" allowSort="true" width="150"/>
+</query>
+
+<!--历史数据查询，左侧菜单        -->
+<query id="jp_station_info_menu" key="id" tableName="站点信息列表" className="com.cnpc.jpro.entity.StationInfo" widthType="px">
+        <sql><![CDATA[
+                select a.id,a.name,a.mn,a.address,a.lat,a.lng,b.name areaCode,a.remark,c.name stCode
+                from jp_station_info a
+                left join tbl_dict b on(a.area_code=b.id)
+                left join jp_st_code c on(a.st_code=c.id)
+                where 1=1
+        ]]></sql>
+        <column key="rowIndex" header="序号" width="80"/>
+        <!--<column key="stCode" header="系统编码" classType="String" allowSort="true" width="150" />-->
+        <column key="name" header="企业名称" classType="String" allowSort="true" width="150"/>
+        <!--<column key="mn" header="设备唯一标识" classType="String" allowSort="true" width="150"/>-->
+        <!--<column key="address" header="地址" classType="String" allowSort="true" width="150"/>-->
+        <!--<column key="lat" header="经度" classType="String" allowSort="true" width="150"/>-->
+        <!--<column key="lng" header="纬度" classType="String" allowSort="true" width="150"/>-->
+        <!--<column key="areaCode" header="地区" classType="String" allowSort="true" width="150"/>-->
+        <!--<column key="remark" header="备注" classType="String" allowSort="true" width="150"/>-->
+</query>
+
+<query id="jp_water_hour" key="id" tableName="小时数据列表" className="com.cnpc.jpro.entity.WaterHour" widthType="px">
+        <sql><![CDATA[
+                select a.mn,DATE_FORMAT(mtime,'%Y-%m-%d %H') mtime,
+                max(case factor_code when 'w00000' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w00000,
+                max(case factor_code when 'w01001' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w01001,
+                max(case factor_code when 'w01018' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w01018,
+                max(case factor_code when 'w21003' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21003,
+                max(case factor_code when 'w21011' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21011,
+                max(case factor_code when 'w21001' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21001,
+                max(case factor_code when 'w20116' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20116,
+                max(case factor_code when 'w20117' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20117,
+                max(case factor_code when 'w20121' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20121,
+                max(case factor_code when 'w20122' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20122,
+                max(case factor_code when 'w20120' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20120,
+                max(case factor_code when 'w20123' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20123,
+                max(case factor_code when 'w20115' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20115,
+                max(case factor_code when 'w01020' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w01020,
+                max(case factor_code when 'w21016' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21016,
+                max(case factor_code when 'w21017' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21017
+                from jp_monitor_hour a
+                where a.mn=@mn#
+                and factor_code in('w00000','w01001','w01018','w21003','w21011',
+                    'w21001','w20116','w20117','w20121','w20122',
+                    'w20120','w20123','w20115','w01020','w21016','w21017')
+                and mtime>=DATE_FORMAT('2019-01-01','%Y-%m-%d')
+                and mtime<=DATE_FORMAT(CONCAT('2019-01-01',' 23'),'%Y-%m-%d %H')
+                and 1=1
+                group by mn,mtime
+                order by mn,factor_code,mtime
+        ]]></sql>
+        <column key="rowIndex" header="序号" width="80"/>
+        <!--<column key="entName" header="企业名称" classType="String" allowSort="true" width="150"/>-->
+        <column key="mn" header="设备唯一标识" classType="String" allowSort="true" width="150" hidden="true"/>
+        <column key="mtime" header="时间" classType="String" allowSort="true" width="150"/>
+        <column key="w00000" header="污水" classType="String" allowSort="true" width="150"/>
+        <column key="w01001" header="PH值" classType="String" allowSort="true" width="150"/>
+        <column key="w01018" header="化学需氧量" classType="String" allowSort="true" width="150"/>
+        <column key="w21003" header="氨氮" classType="String" allowSort="true" width="150"/>
+        <column key="w21011" header="总磷" classType="String" allowSort="true" width="150"/>
+        <column key="w21001" header="总氮" classType="String" allowSort="true" width="150"/>
+        <column key="w20116" header="总铬" classType="String" allowSort="true" width="150"/>
+        <column key="w20117" header="六价铬" classType="String" allowSort="true" width="150"/>
+        <column key="w20121" header="总镍" classType="String" allowSort="true" width="150"/>
+        <column key="w20122" header="总铜" classType="String" allowSort="true" width="150"/>
+        <column key="w20120" header="总铅" classType="String" allowSort="true" width="150"/>
+        <column key="w20123" header="总锌" classType="String" allowSort="true" width="150"/>
+        <column key="w20115" header="总镉" classType="String" allowSort="true" width="150"/>
+        <column key="w01020" header="总有机碳" classType="String" allowSort="true" width="150"/>
+        <column key="w21016" header="氰化物" classType="String" allowSort="true" width="150"/>
+        <column key="w21017" header="氟化物" classType="String" allowSort="true" width="150"/>
 </query>
 </queryContext>

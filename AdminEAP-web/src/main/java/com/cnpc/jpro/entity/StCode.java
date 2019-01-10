@@ -2,13 +2,18 @@ package com.cnpc.jpro.entity;
 
 import com.cnpc.framework.annotation.Header;
 import com.cnpc.framework.base.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="jp_st_code")
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler", "fieldHandler" })
 public class StCode extends BaseEntity {
+
+    private static final long serialVersionUID = 2L;
 
     @Header(name="系统名称")
     @Column(name="name")

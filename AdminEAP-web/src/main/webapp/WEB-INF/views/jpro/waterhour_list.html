@@ -1,0 +1,81 @@
+<section class="content-header">
+    <h1>小时数据</h1>
+    <ol class="breadcrumb">
+        <li><a href="${basePath}"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">历史数据</a></li>
+        <li class="active">小时数据</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <!-- /.col -->
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <div class="dataTables_filter" id="searchDiv">
+                    <input type="search" placeholder="请输入企业名称" title="企业名称" name="a.name"
+                           class="form-control" id="name" operator="like" likeOption="true">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" data-btn-type="search">查询</button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <table id="stationinfo_table" class="table table-bordered table-striped table-hover">
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+        <div class="col-md-8">
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <div class="dataTables_filter" style="margin:10px 10px 0 0" id="searchDiv_func">
+                    <input type="hidden" name="mn" value="-1" id="mn"/>
+                    <!--<input placeholder="请输入功能名" name="name" id="functionName" class="form-control" type="search" likeOption="true"/>-->
+                    <input type="text" class="form-control" data-flag="datepicker" data-format="yyyy-mm-dd" name="btime" id="btime" placeholder="开始日期">
+                    <input type="text" class="form-control" data-flag="datepicker" data-format="yyyy-mm-dd" name="etime" id="etime" placeholder="结束日期">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" data-btn-type="searchRoleFunc">查询</button>
+                    </div>
+                    <button type="button" class="btn btn-info" data-pagename="waterhour_list" data-btn-type="custom"><i class="fa fa-check-square-o"></i>&nbsp;自定义列</button>
+                </div>
+                <div class="box-body">
+                    <table id="waterhour_table" class="table table-bordered table-striped table-hover"></table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+    <!-- /.row -->
+
+</section>
+
+<script>
+    var stationinfoTable,waterhourTable;
+    $(function () {
+        var config={
+            rowClick:function(row,isSelected){
+                $("#mn").val(isSelected?row.mn:"-1");
+//                console.log( $("#stationId").val(),row.name);
+//                $("#roleName").remove();
+                /*if(isSelected){
+                    waterhourTable = new CommonTable("waterhour_table", "jp_water_hour", "searchDiv", null);
+                    waterhourTable.dataTable().fnReloadAjax();
+                }*/
+                $("#entName").remove();
+                if (isSelected)
+                    $("#searchDiv_func").prepend("<h5 id='entName' class='pull-left'>【" + row.name + "】</h5>");
+                    dataTable.reloadData();
+
+            }
+        }
+        stationinfoTable = new CommonTable("stationinfo_table", "jp_station_info_menu", "searchDiv", config);
+        dataTable = new CommonTable("waterhour_table", "jp_water_hour", "searchDiv_func", null);
+    })
+
+</script>

@@ -3,21 +3,32 @@ package com.cnpc.jpro.entity;
 import com.cnpc.framework.annotation.Header;
 import com.cnpc.framework.base.entity.BaseEntity;
 import com.cnpc.framework.base.entity.Dict;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="jp_ent_info")
-public class EntInfo extends BaseEntity {
+@Table(name="jp_station_info")
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler", "fieldHandler" })
+public class StationInfo extends BaseEntity {
+    private static final long serialVersionUID = 1L;
 
-    @Header(name = "系统编码")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "st_code")
-    private StCode stCode;
+    //@Header(name = "系统编码")
+    //@ManyToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(name = "st_code")
+    //private StCode stCode;
+
+    @Header(name="系统编码",joinClass = StCode.class)
+    @Column(name = "st_code")
+    private String stCode;
 
     @Header(name="企业名称")
     @Column(name="name")
     private String name;
+
+    @Header(name="设备唯一标识")
+    @Column(name="mn")
+    private String mn;
 
 
     @Header(name="地址")
@@ -89,11 +100,20 @@ public class EntInfo extends BaseEntity {
         this.remark = remark;
     }
 
-    public StCode getStCode() {
+
+    public String getMn() {
+        return mn;
+    }
+
+    public String getStCode() {
         return stCode;
     }
 
-    public void setStCode(StCode stCode) {
+    public void setStCode(String stCode) {
         this.stCode = stCode;
+    }
+
+    public void setMn(String mn) {
+        this.mn = mn;
     }
 }
