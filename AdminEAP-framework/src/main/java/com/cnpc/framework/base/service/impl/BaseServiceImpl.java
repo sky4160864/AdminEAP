@@ -196,10 +196,9 @@ public class BaseServiceImpl implements BaseService {
     }
 
     public List findMapBySql(String sql, String countStr, PageInfo pageInfo, Object[] params, Type[] types, Class clazz) {
-
         if (StrUtil.isEmpty(countStr))
             countStr = "count(*)";
-        String countSql = "select " + countStr + " from (" + sql + ") as table_alias";// .substring(sql.toLowerCase().indexOf("from"));
+        String countSql = "select " + countStr + " from (" + sql + ") as table_alias";
         int count = this.countBySql(countSql, params, types).intValue();
         pageInfo.setCount(count);
         return baseDao

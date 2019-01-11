@@ -91,36 +91,8 @@
         <!--<column key="remark" header="备注" classType="String" allowSort="true" width="150"/>-->
 </query>
 
-<query id="jp_water_hour" key="id" tableName="小时数据列表" className="com.cnpc.jpro.entity.WaterHour" widthType="px">
-        <sql><![CDATA[
-                select a.mn,DATE_FORMAT(mtime,'%Y-%m-%d %H') mtime,
-                max(case factor_code when 'w00000' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w00000,
-                max(case factor_code when 'w01001' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w01001,
-                max(case factor_code when 'w01018' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w01018,
-                max(case factor_code when 'w21003' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21003,
-                max(case factor_code when 'w21011' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21011,
-                max(case factor_code when 'w21001' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21001,
-                max(case factor_code when 'w20116' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20116,
-                max(case factor_code when 'w20117' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20117,
-                max(case factor_code when 'w20121' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20121,
-                max(case factor_code when 'w20122' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20122,
-                max(case factor_code when 'w20120' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20120,
-                max(case factor_code when 'w20123' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20123,
-                max(case factor_code when 'w20115' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20115,
-                max(case factor_code when 'w01020' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w01020,
-                max(case factor_code when 'w21016' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21016,
-                max(case factor_code when 'w21017' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21017
-                from jp_monitor_hour a
-                where a.mn=@mn#
-                and factor_code in('w00000','w01001','w01018','w21003','w21011',
-                    'w21001','w20116','w20117','w20121','w20122',
-                    'w20120','w20123','w20115','w01020','w21016','w21017')
-                and mtime>=DATE_FORMAT('2019-01-01','%Y-%m-%d')
-                and mtime<=DATE_FORMAT(CONCAT('2019-01-01',' 23'),'%Y-%m-%d %H')
-                and 1=1
-                group by mn,mtime
-                order by mn,factor_code,mtime
-        ]]></sql>
+<query id="jp_water_hour" key="id" tableName="小时数据列表" className="com.cnpc.jpro.entity.WaterHour" widthType="px"
+       simpleSearch="false" service="monitorService" method="getWaterHourList">
         <column key="rowIndex" header="序号" width="80"/>
         <!--<column key="entName" header="企业名称" classType="String" allowSort="true" width="150"/>-->
         <column key="mn" header="设备唯一标识" classType="String" allowSort="true" width="150" hidden="true"/>

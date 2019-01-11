@@ -3,6 +3,7 @@ package com.cnpc.jpro.service;
 import com.cnpc.framework.base.pojo.PageInfo;
 import com.cnpc.framework.base.service.BaseService;
 import com.cnpc.framework.query.entity.QueryCondition;
+import com.cnpc.jpro.entity.WaterHour;
 
 import java.util.List;
 
@@ -18,5 +19,5 @@ public interface MonitorService extends BaseService {
      * @param pageInfo  分页信息
      * @return
      */
-    List getGroupList(QueryCondition condition, PageInfo pageInfo);
+    List<WaterHour> getWaterHourList(QueryCondition condition, PageInfo pageInfo);
 }

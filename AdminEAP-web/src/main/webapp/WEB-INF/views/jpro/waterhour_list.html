@@ -15,15 +15,15 @@
         <div class="col-md-4">
             <div class="box box-primary">
                 <!-- /.box-header -->
-                <div class="dataTables_filter" id="searchDiv">
+                <div class="dataTables_filter" id="searchDivStation">
                     <input type="search" placeholder="请输入企业名称" title="企业名称" name="a.name"
-                           class="form-control" id="name" operator="like" likeOption="true">
+                           class="form-control" operator="like" likeOption="true">
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary" data-btn-type="search">查询</button>
                     </div>
                 </div>
                 <div class="box-body">
-                    <table id="stationinfo_table" class="table table-bordered table-striped table-hover">
+                    <table id="waterhour_stationinfo_table" class="table table-bordered table-striped table-hover">
                     </table>
                 </div>
                 <!-- /.box-body -->
@@ -35,11 +35,10 @@
                 <!-- /.box-header -->
                 <div class="dataTables_filter" style="margin:10px 10px 0 0" id="searchDiv_func">
                     <input type="hidden" name="mn" value="-1" id="mn"/>
-                    <!--<input placeholder="请输入功能名" name="name" id="functionName" class="form-control" type="search" likeOption="true"/>-->
                     <input type="text" class="form-control" data-flag="datepicker" data-format="yyyy-mm-dd" name="btime" id="btime" placeholder="开始日期">
                     <input type="text" class="form-control" data-flag="datepicker" data-format="yyyy-mm-dd" name="etime" id="etime" placeholder="结束日期">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary" data-btn-type="searchRoleFunc">查询</button>
+                        <button type="button" class="btn btn-primary" data-btn-type="searchFunc" id="searchFunc">查询</button>
                     </div>
                     <button type="button" class="btn btn-info" data-pagename="waterhour_list" data-btn-type="custom"><i class="fa fa-check-square-o"></i>&nbsp;自定义列</button>
                 </div>
@@ -56,26 +55,50 @@
 </section>
 
 <script>
+
+
     var stationinfoTable,waterhourTable;
     $(function () {
         var config={
             rowClick:function(row,isSelected){
                 $("#mn").val(isSelected?row.mn:"-1");
-//                console.log( $("#stationId").val(),row.name);
-//                $("#roleName").remove();
-                /*if(isSelected){
-                    waterhourTable = new CommonTable("waterhour_table", "jp_water_hour", "searchDiv", null);
-                    waterhourTable.dataTable().fnReloadAjax();
-                }*/
                 $("#entName").remove();
-                if (isSelected)
+                if (isSelected){
                     $("#searchDiv_func").prepend("<h5 id='entName' class='pull-left'>【" + row.name + "】</h5>");
-                    dataTable.reloadData();
-
+                    waterhourTable.reloadData();
+                }
             }
         }
-        stationinfoTable = new CommonTable("stationinfo_table", "jp_station_info_menu", "searchDiv", config);
-        dataTable = new CommonTable("waterhour_table", "jp_water_hour", "searchDiv_func", null);
+        stationinfoTable = new CommonTable("waterhour_stationinfo_table", "jp_station_info_menu", "searchDivStation", config);
+        waterhourTable = new CommonTable("waterhour_table", "jp_water_hour", "searchDiv_func", null);
+
+        $("#searchFunc").bind("click",function(){//2019-01-01
+            if($("#mn").val()==-1){
+                modals.info('请选择要查询的企业');
+                return;
+            }
+            waterhourTable.reloadData();
+        });
+
+        $("#btime").datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd',
+            language: 'zh-CN',
+            clearBtn: true,
+            todayHighlight: true
+        });
+        var firstDate = new Date();
+        firstDate.setDate(1); //第一天
+        $("#btime").datepicker('setDate',new Date(firstDate)); //设置为当前日期
+
+        $("#etime").datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd',
+            language: 'zh-CN',
+            clearBtn: true,
+            todayHighlight: true
+        });
+        $("#etime").datepicker('setDate',new Date()); //设置为当前日期
     })
 
 </script>

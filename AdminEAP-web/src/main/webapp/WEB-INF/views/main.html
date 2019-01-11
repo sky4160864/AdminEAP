@@ -344,9 +344,16 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" id="mainDiv">
-
+  <div class="content-wrapper" >
+    <ul id="mainTab" class="nav nav-tabs">
+      <!--<li class="active"><a href="#home" data-toggle="tab">首页</a></li>-->
+    </ul>
+    <div id="mainTabContent" class="tab-content">
+      <!--<div class="tab-pane fade in active" id="home"></div>-->
+    </div>
   </div>
+
+
   <!-- /.content-wrapper -->
 
   <!--<footer class="main-footer text-center">
@@ -652,13 +659,15 @@
 
     $(function(){
         //首页默认加载
-        loadPage("${basePath}/homePage");
+        loadPageTab("${basePath}/homePage","首页");
         //loadPage("${basePath}/user/list");
         //loadPage("${basePath}/activiti/task/todo/list");
         //loadPage("${basePath}/activiti/delegate/list");
         //loadPage("${basePath}/markdown/preview?id=402880e958ecdff60158ed0c62ba0001")
+
         $("a[data-url]").click(function(evt){
-            loadPage($(this).data("url"));
+//            console.log("$(this)",$(this).text());
+            loadPageTab($(this).data("url"),$(this).text());
             $("ul.treeview-menu li").removeClass("active");
             $(this).parent().addClass("active");
         });

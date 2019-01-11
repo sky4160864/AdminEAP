@@ -10,62 +10,32 @@
  * @returns {*}
  */
 //(function ($) {
-function isEmptyObject(e) {
-    var t;
-    for (t in e)
-        return !1;
-    return !0
-}
 
 function loadPage(url, container) {
     if (!container)
         container = "#mainDiv";
     if (!url.startWith(basePath))
         url = basePath + url;
+    // console.log("url",url,$('#mainTab'));
+
+    // var mainTab = $("#mainTab");
+    //tabMainName:tab标签页所在的容器
+    //tabName:当前tab的名称
+    //tabTitle:当前tab的标题
+    //tabUrl:当前tab所指向的URL地址
+    var options = {
+        tabMainName:"mainTab",
+        tabName:"111",
+        tabTitle:"222",
+        tabUrl:url
+    };
+    // console.log("22222222222222222222",options.tabMainName, options.tabName);
+    addTab(options);
     jQuery(container).load(url, function (response, status, xhr) {
         if (status == "success") {
             if (response) {
                 try {
                     var result = jQuery.parseJSON(response);
-                    if (result.code == 100) {
-                        jQuery(container).html("");
-                        alert(result.data);
-                    }
-                } catch (e) {
-                    return response;
-                }
-            }
-        }
-    });
-}
-
-
-function loadPageTab(url,tabTitle) {
-    // console.log("url",url,"container",container);
-    if (!url.startWith(basePath))
-        url = basePath + url;
-    if(isEmptyObject(tabTitle)){
-        tabTitle = url.replaceAll("/","");
-    }
-    var tabName = url.replaceAll("/","");
-
-    var options = {
-        tabMainName:"mainTab",
-        tabName:tabName,
-        tabTitle:tabTitle,
-        tabUrl:url,
-        tabContentMainId:"mainTabContent"
-    };
-    addTab(options);
-    var content_id = '#tab_content_'+options.tabName;
-    // console.log("tab_content--------------->"+content_id)
-    jQuery(content_id).load(url, function (response, status, xhr) {
-        // console.log("response",response);
-        if (status == "success") {
-            if (response) {
-                try {
-                    var result = jQuery.parseJSON(response);
-                    // console.log("result",result);
                     if (result.code == 100) {
                         jQuery(container).html("");
                         alert(result.data);
@@ -128,10 +98,10 @@ jQuery.fn.load = function (url, params, callback) {
                     responseText);
             }
         }).always(callback && function (jqXHR, status) {
-            self.each(function () {
-                callback.apply(this, response || [jqXHR.responseText, status, jqXHR]);
+                self.each(function () {
+                    callback.apply(this, response || [jqXHR.responseText, status, jqXHR]);
+                });
             });
-        });
     }
 
     return this;
@@ -157,13 +127,13 @@ function ajaxPost(url, params, callback) {
     var headers = {};
     headers['CSRFToken'] = jQuery("#csrftoken").val();
 
-    // console.log("before remove empty prop:");
-    // console.log(params);
+    console.log("before remove empty prop:");
+    console.log(params);
     if (params && typeof params == "object") {
         params = deleteEmptyProp(params);
     }
-    // console.log("after remove empty prop:");
-    // console.log(params);
+    console.log("after remove empty prop:");
+    console.log(params);
 
     jQuery.ajax({
         type: 'post',
@@ -405,12 +375,11 @@ function addTab(options) {
     //tabName:当前tab的名称
     //tabTitle:当前tab的标题
     //tabUrl:当前tab所指向的URL地址
-    //tabContentMainId:内容ID
     var exists = checkTabIsExists(options.tabMainName, options.tabName);
     if(exists){
         $("#tab_a_"+options.tabName).click();
     } else {
-        $("#"+options.tabMainName).append('<li id="tab_li_'+options.tabName+'"><a class="tab_a_cls" href="#tab_content_'+options.tabName+'" data-toggle="tab" id="tab_a_'+options.tabName+'"><button class="close closeTab" type="button" onclick="closeTab(this);">×</button>'+options.tabTitle+'</a></li>');
+        $("#"+options.tabMainName).append('<li id="tab_li_'+options.tabName+'"><a href="#tab_content_'+options.tabName+'" data-toggle="tab" id="tab_a_'+options.tabName+'"><button class="close closeTab" type="button" onclick="closeTab(this);">×</button>'+options.tabTitle+'</a></li>');
 
         //固定TAB中IFRAME高度
         mainHeight = $(document.body).height() - 5;
@@ -421,7 +390,7 @@ function addTab(options) {
         } else {
             content = '<iframe src="' + options.tabUrl + '" width="100%" height="'+mainHeight+'px" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes" allowtransparency="yes"></iframe>';
         }
-        $("#"+options.tabContentMainId).append('<div id="tab_content_'+options.tabName+'" role="tabpanel" class="tab-pane" id="'+options.tabName+'">'+content+'</div>');
+        $("#"+options.tabContentMainName).append('<div id="tab_content_'+options.tabName+'" role="tabpanel" class="tab-pane" id="'+options.tabName+'">'+content+'</div>');
         $("#tab_a_"+options.tabName).click();
     }
 }
@@ -436,27 +405,15 @@ function closeTab (button) {
     //通过该button找到对应li标签的id
     var li_id = $(button).parent().parent().attr('id');
     var id = li_id.replace("tab_li_","");
-    // console.log("closeTab------------>",li_id,id,$("li.active"));
-    // console.log("closeTab------------>li_id",$("li.active")[2]);
-    // console.log("closeTab------------>li_id",$("li.active")[2].id);
 
     //如果关闭的是当前激活的TAB，激活他的前一个TAB
-    // if ($("li.active").attr('id') == li_id) {
-    if ($("li.active")[2].id == li_id) {
-        // console.log("prev-------->",$("li.active").prev().find("a[class='tab_a_cls']"));
-        // console.log("prev li-------->",$("li.active").prev("li").find("a[class='tab_a_cls']"));
-        var lias = $("li.active").prev().find("a[class='tab_a_cls']");
-        // console.log("lias.length",lias.length);
-        if(lias.length>0){
-            lias[0].click();
-        }
-
+    if ($("li.active").attr('id') == li_id) {
+        $("li.active").prev().find("a").click();
     }
 
     //关闭TAB
     $("#" + li_id).remove();
     $("#tab_content_" + id).remove();
-    // console.log("closeTab--------------->",li_id,"#tab_content_" + id);
 };
 
 /**
@@ -466,8 +423,7 @@ function closeTab (button) {
  * @returns {Boolean}
  */
 function checkTabIsExists(tabMainName, tabName){
-    // console.log("checkTabIsExists--------------->","#"+tabMainName+" > #tab_li_"+tabName);
     var tab = $("#"+tabMainName+" > #tab_li_"+tabName);
-    // console.log(tab.length);
+    //console.log(tab.length)
     return tab.length > 0;
 }

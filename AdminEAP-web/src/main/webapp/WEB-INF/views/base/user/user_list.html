@@ -16,7 +16,7 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<!-- /.box-header -->
-					<div class="dataTables_filter" id="searchDiv">
+					<div class="dataTables_filter" id="searchDiv_01">
 						<input placeholder="请输入姓名" name="name" class="form-control" type="search" likeOption="true" /> <input
 							placeholder="请输入登录名" name="loginName" class="form-control" type="search" likeOption="true" />
 						<div class="btn-group">
@@ -31,7 +31,7 @@
 						<button type="button" class="btn btn-info" data-pagename="user_list" data-btn-type="custom"><i class="fa fa-check-square-o"></i>&nbsp;自定义列</button>
 					</div>
 					<div class="box-body">
-						<table id="user_table" class="table table-bordered table-striped table-hover">
+						<table id="user_table_01" class="table table-bordered table-striped table-hover">
 						</table>
 					</div>
 					<!-- /.box-body -->
@@ -49,7 +49,7 @@
 		var winId="userWin";
 		$(function() { 
 			//init table and fill data
-			userTable = new CommonTable("user_table", "user_list", "searchDiv");
+			userTable = new CommonTable("user_table_01", "user_list", "searchDiv_01");
 
 			//button event
 			$('button[data-btn-type]').click(function() {

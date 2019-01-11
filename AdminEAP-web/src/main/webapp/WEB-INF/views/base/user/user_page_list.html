@@ -58,30 +58,46 @@
             var rowId = userTable.getSelectedRowId();
             switch (action) {
                 case 'add':
-                    window.loadPage(basePath + "/user/page/edit");
+                    modals.openWin({
+                        winId:winId,
+                        title:'新增用户',
+                        width:'900px',
+                        url:basePath+"/user/page/edit"
+                        /*, hideFunc:function(){
+                            modals.info("hide me");
+                        },
+                        showFunc:function(){
+                            modals.info("show me");
+                        } */
+                    });
                     break;
                 case 'edit':
-                    if (!rowId) {
+                    if(!rowId){
                         modals.info('请选择要编辑的行');
                         return false;
                     }
-                    window.loadPage(basePath + "/user/page/edit?id=" + rowId);
+                    modals.openWin({
+                        winId:winId,
+                        title:'编辑用户【'+userTable.getSelectedRowData().name+'】',
+                        width:'900px',
+                        url:basePath+"/user/page/edit?id="+rowId,
+                    });
                     break;
                 case 'delete':
-                    if (!rowId) {
+                    if(!rowId){
                         modals.info('请选择要删除的行');
                         return false;
                     }
-                    modals.confirm("是否要删除该行数据？", function () {
-                        ajaxPost(basePath + "/user/delete/" + rowId, null, function (data) {
-                            if (data.success) {
+                    modals.confirm("是否要删除该行数据？",function(){
+                        ajaxPost(basePath+"/user/page/delete/"+rowId,null,function(data){
+                            if(data.success){
                                 //modals.correct("已删除该数据");
                                 userTable.reloadRowData();
-                            } else {
+                            }else{
                                 modals.error("用户数据被引用，不可删除！");
                             }
                         });
-                    });
+                    })
                     break;
             }
 

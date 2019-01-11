@@ -1,23 +1,9 @@
 package com.cnpc.jpro.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.cnpc.framework.annotation.RefreshCSRFToken;
-import com.cnpc.framework.annotation.VerifyCSRFToken;
-import com.cnpc.framework.base.pojo.Result;
-import com.cnpc.framework.base.service.BaseService;
-import com.cnpc.tool.message.entity.Message;
-import com.cnpc.tool.message.pojo.MessageConstant;
-import com.cnpc.tool.message.service.MessageService;
-import org.springframework.cache.annotation.Cacheable;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 /**
  * 历史数据-水小时数据控制器
@@ -27,8 +13,8 @@ import java.util.Map;
 @RequestMapping("/waterhour")
 public class WaterHourController {
 
-    @Resource
-    private BaseService baseService;
+    //@Resource
+    //private BaseService baseService;
 
 
     /**

@@ -17,7 +17,7 @@
             <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    <div id="tree"></div>
+                    <div id="treeOrg"></div>
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -159,7 +159,7 @@
                         ajaxPost(basePath + '/org/save', params, function (data, status) {
                             if (data.success) {
                                 //var id=$("input[name='id']").val();
-                                var selectedArr = $("#tree").data("treeview").getSelected();
+                                var selectedArr = $("#treeOrg").data("treeview").getSelected();
                                 var selectedNodeId = selectedArr.length > 0 ? selectedArr[0].nodeId : 0;
                                 self.initTree(selectedNodeId);
                             }
@@ -216,7 +216,7 @@
             var self = this;
             $('button[data-btn-type]').click(function () {
                 var action = $(this).attr('data-btn-type');
-                var selectedArr = $("#tree").data("treeview").getSelected();
+                var selectedArr = $("#treeOrg").data("treeview").getSelected();
                 var selectedNode = selectedArr.length > 0 ? selectedArr[0] : null;
                 switch (action) {
                     case 'addRoot':
@@ -289,11 +289,11 @@
                         modals.info(data.message);
                     }
                     //定位
-                    var brothers = $("#tree").data("treeview").getSiblings(selectedNode);
+                    var brothers = $("#treeOrg").data("treeview").getSiblings(selectedNode);
                     if (brothers.length > 0)
                         self.initTree(brothers[brothers.length - 1].nodeId);
                     else {
-                        var parent = $("#tree").data("treeview").getParent(selectedNode);
+                        var parent = $("#treeOrg").data("treeview").getParent(selectedNode);
                         self.initTree(parent ? parent.nodeId : 0);
                     }
                 });
@@ -310,7 +310,7 @@
             ajaxPost(basePath + "/org/treeData", null, function (data) {
                 treeData = data;
             });
-            $("#tree").treeview({
+            $("#treeOrg").treeview({
                 data: treeData,
                 showBorder: true,
                 expandIcon: "glyphicon glyphicon-stop",
@@ -325,9 +325,9 @@
                 return;
             //默认选中第一个节点
             selectNodeId = selectNodeId || 0;
-            $("#tree").data('treeview').selectNode(selectNodeId);
-            $("#tree").data('treeview').expandNode(selectNodeId);
-            $("#tree").data('treeview').revealNode(selectNodeId);
+            $("#treeOrg").data('treeview').selectNode(selectNodeId);
+            $("#treeOrg").data('treeview').expandNode(selectNodeId);
+            $("#treeOrg").data('treeview').revealNode(selectNodeId);
         },
         //新增时，带入父级机构名称id,自动生成levelcode
         fillParentAndLevelCode: function (selectedNode) {
@@ -339,10 +339,10 @@
                 var levelCode = nodes ? nodes[nodes.length - 1].levelCode : null;
                 $("input[name='levelCode']").val(getNextCode(selectedNode.levelCode, levelCode, 6));
             } else {
-                var parentNode = $("#tree").data("treeview").getNode(0);
+                var parentNode = $("#treeOrg").data("treeview").getNode(0);
                 var levelCode = "000000";
                 if (parentNode) {
-                    var brothers = $("#tree").data("treeview").getSiblings(0);
+                    var brothers = $("#treeOrg").data("treeview").getSiblings(0);
                     levelCode = brothers[brothers.length - 1].levelCode;
                 }
                 $("input[name='levelCode']").val(getNextCode("", levelCode, 6));

@@ -3,10 +3,13 @@ package com.cnpc.framework.base.controller;
 import com.alibaba.fastjson.JSON;
 import com.cnpc.framework.annotation.RefreshCSRFToken;
 import com.cnpc.framework.annotation.VerifyCSRFToken;
+import com.cnpc.framework.base.entity.Role;
 import com.cnpc.framework.base.entity.User;
 import com.cnpc.framework.base.entity.UserAvatar;
+import com.cnpc.framework.base.entity.UserRole;
 import com.cnpc.framework.base.pojo.PageInfo;
 import com.cnpc.framework.base.pojo.Result;
+import com.cnpc.framework.base.service.RoleService;
 import com.cnpc.framework.base.service.UserRoleService;
 import com.cnpc.framework.base.service.UserService;
 import com.cnpc.framework.utils.EncryptUtil;
@@ -25,6 +28,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -96,6 +100,15 @@ public class UserController {
 
         User user = userService.get(User.class, id);
         try {
+           //外键关联无法删除，先删除关联表
+            List<UserRole> list = userRoleService.findBySql("select * from tbl_user_role where userId='"+id+"'",UserRole.class);
+            StringBuilder ids = new StringBuilder("1");
+            for (int i = 0; i < list.size(); i++) {
+                ids.append(",").append(list.get(i).getId());
+            }
+            if(list.size()>0){
+                userRoleService.delete(ids.toString());
+            }
             userService.delete(user);
         } catch (Exception e) {
             return new Result(false);

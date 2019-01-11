@@ -52,7 +52,7 @@ public class BaseController {
             map.put("valid", objList.isEmpty());
             return map;
         } catch (Exception ex) {
-            System.out.println(ex.getMessage().toString());
+            //System.out.println(ex.getMessage().toString());
             map.put("valid", false);
             return map;
         }
