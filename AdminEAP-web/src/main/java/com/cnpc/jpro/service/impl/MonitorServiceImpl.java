@@ -1,5 +1,6 @@
 package com.cnpc.jpro.service.impl;
 
+import com.alibaba.druid.util.StringUtils;
 import com.cnpc.framework.base.pojo.PageInfo;
 import com.cnpc.framework.base.service.impl.BaseServiceImpl;
 import com.cnpc.framework.exception.QueryException;
@@ -33,6 +34,9 @@ public class MonitorServiceImpl extends BaseServiceImpl implements MonitorServic
 
         List<WaterHour> groupList = null;
         String sql = "select a.mn,DATE_FORMAT(mtime,'%Y-%m-%d %H') mtime,\n" + "max(case factor_code when 'w00000' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w00000,\n" + "max(case factor_code when 'w01001' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w01001,\n" + "max(case factor_code when 'w01018' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w01018,\n" + "max(case factor_code when 'w21003' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21003,\n" + "max(case factor_code when 'w21011' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21011,\n" + "max(case factor_code when 'w21001' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21001,\n" + "max(case factor_code when 'w20116' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20116,\n" + "max(case factor_code when 'w20117' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20117,\n" + "max(case factor_code when 'w20121' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20121,\n" + "max(case factor_code when 'w20122' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20122,\n" + "max(case factor_code when 'w20120' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20120,\n" + "max(case factor_code when 'w20123' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20123,\n" + "max(case factor_code when 'w20115' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w20115,\n" + "max(case factor_code when 'w01020' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w01020,\n" + "max(case factor_code when 'w21016' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21016,\n" + "max(case factor_code when 'w21017' then CAST(ROUND(val_avg,2) AS CHAR(20)) else 0 end ) w21017\n" + "from jp_monitor_hour a\n" + "where a.mn=?\n" + "and factor_code in('w00000','w01001','w01018','w21003','w21011',\n" + "    'w21001','w20116','w20117','w20121','w20122',\n" + "    'w20120','w20123','w20115','w01020','w21016','w21017')\n" + "and mtime>=DATE_FORMAT(?,'%Y-%m-%d')\n" + "and mtime<=DATE_FORMAT(CONCAT(?,' 23'),'%Y-%m-%d %H')\n" + "group by mn,mtime\n" + "order by mn,factor_code,mtime";
+        if(!StringUtils.isEmpty(condition.getSortInfo())){
+            sql = "select * from ("+sql+") as aa order by "+condition.getSortInfo();
+        }
         try{
             //获取Query配置
             Query query = QueryUtil.getQuery(condition);

@@ -121,6 +121,7 @@
             $("#folder ul li").removeClass("active");
             $(this).addClass("active");
             //改变title
+//            console.log($(this).data("url"));
             $(".content-header small").text($(this).find("a:eq(0)").children().eq(1).html());
             //加载内容
             loadPage(basePath + $(this).data("url"), "#contentBody");
@@ -139,6 +140,7 @@
     })
 
     function titleBtnClick(obj) {
+//        console.log($(obj).data("flag"));
         if ($(obj).data("flag") == "new") {
             loadPage(basePath + "/message/edit", "#contentBody");
             $(obj).text("返回收件箱");

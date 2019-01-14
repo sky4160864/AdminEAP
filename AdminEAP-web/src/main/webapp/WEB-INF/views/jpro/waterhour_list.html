@@ -52,12 +52,13 @@
     </div>
     <!-- /.row -->
 
+
 </section>
 
 <script>
 
 
-    var stationinfoTable,waterhourTable;
+    var stationinfoTable,waterhourTable, winId = "winWaterHourChart";
     $(function () {
         var config={
             rowClick:function(row,isSelected){
@@ -100,5 +101,45 @@
         });
         $("#etime").datepicker('setDate',new Date()); //设置为当前日期
     })
+
+    //超标警告
+    function fnRenderMonitor(value,type,rowObj) {
+//         console.log(value,type,rowObj);
+        if(rowObj.w00000>rowObj.w01001){
+            return '<span class="label label-danger">'+value+'</span>';
+        }else if(rowObj.w00000>rowObj.w01018){
+            return '<span class="label label-warning">'+value+'</span>';
+        }else {
+            return value;
+        }
+    }
+
+    //网络
+    function fnRenderMonitor2(value,type,rowObj) {
+        if (value < 15000){
+        // return '<i class="fa text-red">111</i>';
+//            return '<i class="fa fa-connectdevelop text-red"></i>';
+            return '<i class="fa fa-circle text-yellow"></i>';
+        }else{
+//            return '<i class="fa fa-connectdevelop text-yellow"></i>';
+           return '<i class="fa fa-circle text-green"></i>';
+        }
+    }
+
+    //渲染图表图标
+    function fnRenderChart(value,type,rowObj) {
+        return "<a href='#' onclick='showCharts(\""+$('#mn').val()+"\",\""+$('#btime').val()+"\",\""+$('#etime').val()
+                +"\")'><i class='fa fa-bar-chart'></i></a>";
+    }
+
+    function showCharts(mn,btime,etime) {
+//        console.log(mn,btime,etime);
+        modals.openWin({
+            winId: winId,
+            title: '图表',
+            width: "900px",
+            url: basePath + "/waterhour/chart?mn="+mn+"&btime="+btime+"&etime="+etime
+        })
+    }
 
 </script>

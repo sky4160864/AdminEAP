@@ -8,7 +8,9 @@ function fnRenderMessageType(value, type, rowObj, oSetting) {
 }
 
 function fnRenderMessageStatus(value, type, rowObj) {
+    // console.log(value,type,rowObj);
     if (value == 0) {
+        // return '<span class="label label-danger">草稿</span>'
         return '<span class="label label-warning">草稿</span>'
     } else if (value == 4) {
         return '<span class="label label-success">已发送</span>';
@@ -18,10 +20,10 @@ function fnRenderMessageStatus(value, type, rowObj) {
 
 function fnRenderMessageFlag(value, type) {
     if (value == 1) //重要消息
+        // return '<i class="fa text-red">111</i>';
         return '<i class="fa fa-star-o text-yellow"></i>';
     else
         return '<i class="fa fa-star text-yellow"></i>';
-
 }
 
 //渲染是否有附件图标
@@ -33,9 +35,13 @@ function fnRenderFileIds(value) {
 
 //是否已读
 function fnRenderSubject(value,type,rowObj) {
-    if(rowObj.readYet==1){
-        return value;
-    }else{
-        return value.replace("<a","<a class='text-bold'");
+    // console.log(value,type,rowObj);
+    if (value == 0) {
+        // return '<span class="label label-danger">草稿</span>'
+        return '<span class="label label-warning">value</span>'
+    } else if (value == 4) {
+        return '<span class="label label-success">value</span>';
     }
+    return value;
 }
+

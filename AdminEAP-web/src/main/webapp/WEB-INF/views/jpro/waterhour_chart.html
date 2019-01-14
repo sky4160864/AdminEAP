@@ -1,0 +1,173 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><li class="fa fa-remove"></li></button>
+    <h5 class="modal-title"></h5>
+</div>
+
+<div class="modal-body">
+    <div class="box-body">
+        <div class="col-md-12">
+            <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+            <input type="hidden" id="mn" value="${mn}">
+            <input type="hidden" id="btime" value="${btime}">
+            <input type="hidden" id="etime" value="${etime}">
+            <input type="hidden" value="${CSRFToken}" id='csrftoken'>
+            <div id="main" style="width: 800px;height:300px;"></div>
+        </div>
+    </div>
+</div>
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    // 指定图表的配置项和数据
+    option = {
+        title: {
+            text: '折线图堆叠'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['污水','PH值','化学需氧量','氮氧化物','总有机碳']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一','周二','周三','周四','周五','周六','周日']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        series: [
+            {
+                name:'污水',
+                type:'line',
+//                stack: '总量',
+                data:[120, 132, 101, 134, 90, 230, 210]
+            },
+            {
+                name:'PH值',
+                type:'line',
+//                stack: '总量',
+                data:[220, 182, 191, 234, 290, 330, 310]
+            },
+            {
+                name:'化学需氧量',
+                type:'line',
+//                stack: '总量',
+                data:[150, 232, 201, 154, 190, 330, 410]
+            },
+            {
+                name:'氮氧化物',
+                type:'line',
+//                stack: '总量',
+                data:[320, 332, 301, 334, 390, 330, 320]
+            },
+            {
+                name:'总有机碳',
+                type:'line',
+//                stack: '总量',
+                data:[820, 932, 901, 934, 1290, 1330, 1320]
+            }
+        ]
+    };
+
+
+
+    /*var url = basePath + "/waterhour/chart_data/"+$('#mn').val()+"/"+$('#btime').val()+"/"+$('#etime').val();
+    //    console.log(url);
+    var series = [
+        {
+            name:'污水',
+            type:'bar',
+            stack: '总量',
+        },
+        {
+            name:'PH值',
+            type:'bar',
+            stack: '总量',
+        },
+        {
+            name:'化学需氧量',
+            type:'bar',
+            stack: '浓度',
+        },
+        {
+            name:'总有机碳',
+            type:'bar',
+            stack: '浓度',
+        }];
+
+    dataZoom: [
+        {
+            show: true,
+            start: 94,
+            end: 100
+        },
+        {
+            type: 'inside',
+            start: 94,
+            end: 100
+        },
+        {
+            show: true,
+            yAxisIndex: 0,
+            filterMode: 'empty',
+            width: 30,
+            height: '80%',
+            showDataShadow: false,
+            left: '93%'
+        }
+    ];
+    ajaxPost(url, null, function (data) {
+        if (data.success) {
+            console.log(data);
+            var legend = {data:['污水','PH值','化学需氧量','总有机碳']};
+            var xAxis_data = [];
+            var series_data0 = [];
+            var series_data1 = [];
+            var series_data2 = [];
+            var series_data3 = [];
+            for(var i=0;i<data.data.length;i++){
+                xAxis_data.push(data.data[i].mtime);
+                series_data0.push(data.data[i].w00000);
+                series_data1.push(data.data[i].w01001);
+                series_data2.push(data.data[i].w01018);
+                series_data3.push(data.data[i].w01020);
+            }
+            option["legend"]=legend;
+//            option["xAxis"]["data"]=xAxis_data;
+            series[0]["data"]=series_data0;
+            series[1]["data"]=series_data1;
+            series[2]["data"]=series_data2;
+            series[3]["data"]=series_data3;
+            option["series"]=series;
+            option["dataZoom"]=dataZoom;
+        }
+    });
+*/
+//    console.log(option);
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+</script>

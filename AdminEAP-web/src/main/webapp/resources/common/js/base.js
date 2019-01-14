@@ -410,7 +410,9 @@ function addTab(options) {
     if(exists){
         $("#tab_a_"+options.tabName).click();
     } else {
-        $("#"+options.tabMainName).append('<li id="tab_li_'+options.tabName+'"><a class="tab_a_cls" href="#tab_content_'+options.tabName+'" data-toggle="tab" id="tab_a_'+options.tabName+'"><button class="close closeTab" type="button" onclick="closeTab(this);">×</button>'+options.tabTitle+'</a></li>');
+        // $("#"+options.tabMainName).append('<li id="tab_li_'+options.tabName+'"><a class="tab_a_cls" href="#tab_content_'+options.tabName+'" data-toggle="tab" id="tab_a_'+options.tabName+'"><button class="close closeTab" type="button" onclick="closeTab(this);">×</button>'+options.tabTitle+'</a></li>');
+        //
+        $("#"+options.tabMainName).append('<li id="tab_li_'+options.tabName+'"><a class="tab_a_cls" href="#tab_content_'+options.tabName+'" data-toggle="tab" id="tab_a_'+options.tabName+'">'+options.tabTitle+'<i class="fa fa-times" onclick="closeTab(this);"></i></a></li>');
 
         //固定TAB中IFRAME高度
         mainHeight = $(document.body).height() - 5;

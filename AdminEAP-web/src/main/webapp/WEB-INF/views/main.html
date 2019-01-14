@@ -344,13 +344,12 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
+  <!--<div class="content-wrapper" id="mainDiv"></div>-->
+
+  <!--tab-->
   <div class="content-wrapper" >
-    <ul id="mainTab" class="nav nav-tabs">
-      <!--<li class="active"><a href="#home" data-toggle="tab">首页</a></li>-->
-    </ul>
-    <div id="mainTabContent" class="tab-content">
-      <!--<div class="tab-pane fade in active" id="home"></div>-->
-    </div>
+    <ul id="mainTab" class="nav nav-tabs"></ul>
+    <div id="mainTabContent" class="tab-content"></div>
   </div>
 
 
@@ -599,6 +598,8 @@
 <script type="text/javascript" src="${basePath}/resources/common/js/base-form.js"></script>
 <script type="text/javascript" src="${basePath}/resources/common/js/base-datasource.js"></script>
 <script type="text/javascript" src="${basePath}/resources/common/js/base-org.js"></script>
+<script type="text/javascript" src="${basePath}/resources/common/js/base-jpro.js"></script>
+<script type="text/javascript" src="${basePath}/resources/common/js/echarts.js"></script>
 <!-- 加入页面的的脚本 -->
 <script>
     //加载菜单
@@ -659,7 +660,8 @@
 
     $(function(){
         //首页默认加载
-        loadPageTab("${basePath}/homePage","首页");
+//        loadPage("${basePath}/homePage");
+        loadPageTab("${basePath}/homePage","首页"); //tab
         //loadPage("${basePath}/user/list");
         //loadPage("${basePath}/activiti/task/todo/list");
         //loadPage("${basePath}/activiti/delegate/list");
@@ -667,7 +669,8 @@
 
         $("a[data-url]").click(function(evt){
 //            console.log("$(this)",$(this).text());
-            loadPageTab($(this).data("url"),$(this).text());
+            loadPageTab($(this).data("url"),$(this).text());//tab
+//            loadPage($(this).data("url"));
             $("ul.treeview-menu li").removeClass("active");
             $(this).parent().addClass("active");
         });
