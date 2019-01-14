@@ -11,7 +11,7 @@
             <input type="hidden" id="btime" value="${btime}">
             <input type="hidden" id="etime" value="${etime}">
             <input type="hidden" value="${CSRFToken}" id='csrftoken'>
-            <div id="main" style="width: 800px;height:300px;"></div>
+            <div id="main" style="width: 900px;height:600px;"></div>
         </div>
     </div>
 </div>
@@ -48,6 +48,33 @@
         yAxis: {
             type: 'value'
         },
+        grid: {
+            top: '12%',
+            left: '1%',
+            right: '10%',
+            containLabel: true
+        },
+        dataZoom: [
+            {
+                show: true,
+                start: 94,
+                end: 100
+            },
+            {
+                type: 'inside',
+                start: 94,
+                end: 100
+            },
+            {
+                show: true,
+                yAxisIndex: 0,
+                filterMode: 'empty',
+                width: 30,
+                height: '80%',
+                showDataShadow: false,
+                left: '93%'
+            },
+        ],
         toolbox: {
             show : true,
             feature : {
@@ -82,67 +109,17 @@
                 type:'line',
 //                stack: '总量',
                 data:[320, 332, 301, 334, 390, 330, 320]
-            },
-            {
-                name:'总有机碳',
-                type:'line',
-//                stack: '总量',
-                data:[820, 932, 901, 934, 1290, 1330, 1320]
             }
         ]
     };
 
-
-
     var url = basePath + "/waterhour/chart_data/"+$('#mn').val()+"/"+$('#btime').val()+"/"+$('#etime').val();
     //    console.log(url);
-    var series = [
-        {
-            name:'污水',
-            type:'bar',
-//            stack: '总量',
-        },
-        {
-            name:'PH值',
-            type:'bar',
-//            stack: '总量',
-        },
-        {
-            name:'化学需氧量',
-            type:'bar',
-//            stack: '浓度',
-        },
-        {
-            name:'总有机碳',
-            type:'bar',
-//            stack: '浓度',
-        }];
 
-    dataZoom: [
-        {
-            show: true,
-            start: 94,
-            end: 100
-        },
-        {
-            type: 'inside',
-            start: 94,
-            end: 100
-        },
-        {
-            show: true,
-            yAxisIndex: 0,
-            filterMode: 'empty',
-            width: 30,
-            height: '80%',
-            showDataShadow: false,
-            left: '93%'
-        }
-    ];
     ajaxPost(url, null, function (data) {
         if (data.success) {
             console.log(data);
-            var legend = {data:['污水','PH值','化学需氧量','总有机碳']};
+            var legend = {data:['污水','PH值','化学需氧量','氮氧化物']};
             var xAxis_data = [];
             var series_data0 = [];
             var series_data1 = [];
@@ -157,11 +134,10 @@
             }
             option["legend"]=legend;
             option["xAxis"]["data"]=xAxis_data;
-            series[0]["data"]=series_data0;
-            series[1]["data"]=series_data1;
-            series[2]["data"]=series_data2;
-            series[3]["data"]=series_data3;
-            option["series"]=series;
+            option["series"][0]["data"]=series_data0;
+            option["series"][1]["data"]=series_data1;
+            option["series"][2]["data"]=series_data2;
+            option["series"][3]["data"]=series_data3;
 //            option["dataZoom"]=dataZoom;
         }
     });
