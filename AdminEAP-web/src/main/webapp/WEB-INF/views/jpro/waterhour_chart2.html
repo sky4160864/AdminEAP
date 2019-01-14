@@ -94,28 +94,28 @@
 
 
 
-    var url = basePath + "/waterhour/chart_data/"+$('#mn').val()+"/"+$('#btime').val()+"/"+$('#etime').val();
+    /*var url = basePath + "/waterhour/chart_data/"+$('#mn').val()+"/"+$('#btime').val()+"/"+$('#etime').val();
     //    console.log(url);
     var series = [
         {
             name:'污水',
             type:'bar',
-//            stack: '总量',
+            stack: '总量',
         },
         {
             name:'PH值',
             type:'bar',
-//            stack: '总量',
+            stack: '总量',
         },
         {
             name:'化学需氧量',
             type:'bar',
-//            stack: '浓度',
+            stack: '浓度',
         },
         {
             name:'总有机碳',
             type:'bar',
-//            stack: '浓度',
+            stack: '浓度',
         }];
 
     dataZoom: [
@@ -156,16 +156,16 @@
                 series_data3.push(data.data[i].w01020);
             }
             option["legend"]=legend;
-            option["xAxis"]["data"]=xAxis_data;
+//            option["xAxis"]["data"]=xAxis_data;
             series[0]["data"]=series_data0;
             series[1]["data"]=series_data1;
             series[2]["data"]=series_data2;
             series[3]["data"]=series_data3;
             option["series"]=series;
-//            option["dataZoom"]=dataZoom;
+            option["dataZoom"]=dataZoom;
         }
     });
-
+*/
 //    console.log(option);
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
