@@ -40,3 +40,12 @@ mysql -h172.96.242.63 -uroot -p1qaz2wsx_yfb admineap<E:/admineap_20190116.sql
 
 http://10.33.106.191:8080/zxjk3/login.jsp
 spwqjyzx  jyzx@123
+
+xAxis:{
+    axisLabel:{
+        formatter:function(val) {
+            return 对每个标签处理后的结果（通过js字符串方法处理）
+         }
+    }
+}
+https://www.oschina.net/question/2257073_2144525
