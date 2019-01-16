@@ -22,3 +22,6 @@ redis清缓存
 登录客户端 redis-cli
 flushdb:删除这个db下
 flushall:删除所有
+
+
+http://172.96.242.63:8080/AdminEAP/#
