@@ -14,14 +14,27 @@ mysql
 
 
 #mysqld.cnf
-路径/etc/mysql/mysql.conf.d
-默认无sql_mode：ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
-配置sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+路径vim /etc/mysql/mysql.conf.d/mysqld.cnf
+问题1：ONLY_FULL_GROUP_BY
+    默认无sql_mode：ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+    配置sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+问题2：LINUX下的MYSQL默认是要区分表名大小写的
+    配置lower_case_table_names=1
+
 
 redis清缓存
 登录客户端 redis-cli
 flushdb:删除这个db下
 flushall:删除所有
+
+
+Tomcat
+/usr/apache-tomcat-7.0.79/bin/startup.sh
+/usr/apache-tomcat-7.0.79/bin/shutdown.sh
+
+#强制删除
+rm -rf 删除文件夹
+rm -f 删除文件
 
 
 http://172.96.242.63:8080/AdminEAP/#
