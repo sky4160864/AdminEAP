@@ -98,8 +98,8 @@
         <column key="mn" header="设备唯一标识" classType="String" allowSort="true" width="150" hidden="true"/>
         <column key="mtime" header="时间" classType="String" allowSort="true" width="150"/>
         <column key="w00000" header="污水" classType="String" allowSort="true" width="150" fnRender="fnRenderMonitor"/>
-        <column key="w01001" header="PH值" classType="String" allowSort="true" width="150" fnRender="fnRenderMonitor2"/>
-        <column key="w01018" header="化学需氧量" classType="String" allowSort="true" width="150"/>
+        <column key="w01001" header="PH值" classType="String" allowSort="true" width="150" />
+        <column key="w01018" header="化学需氧量" classType="String" allowSort="true" width="150" fnRender="fnRenderMonitor3"/>
         <column key="w21003" header="氨氮" classType="String" allowSort="true" width="150"/>
         <column key="w21011" header="总磷" classType="String" allowSort="true" width="150"/>
         <column key="w21001" header="总氮" classType="String" allowSort="true" width="150"/>
@@ -113,6 +113,7 @@
         <column key="w01020" header="总有机碳" classType="String" allowSort="true" width="150"/>
         <column key="w21016" header="氰化物" classType="String" allowSort="true" width="150"/>
         <column key="w21017" header="氟化物" classType="String" allowSort="true" width="150"/>
+        <column key="net_status" header="网络状态" classType="String" allowSort="true" width="150" fnRender="fnRenderMonitor2"/>
         <column key="chart" header="图表" classType="String" allowSort="true" width="150" fnRender="fnRenderChart"/>
 </query>
 </queryContext>

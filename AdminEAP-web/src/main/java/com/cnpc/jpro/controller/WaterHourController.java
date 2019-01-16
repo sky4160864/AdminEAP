@@ -1,7 +1,6 @@
 package com.cnpc.jpro.controller;
 
 
-import com.cnpc.framework.annotation.RefreshCSRFToken;
 import com.cnpc.framework.base.pojo.Result;
 import com.cnpc.framework.base.service.BaseService;
 import com.cnpc.jpro.entity.WaterHour;
@@ -58,7 +57,6 @@ public class WaterHourController {
      * @return
      */
     @RequestMapping(value="/chart_data/{mn}/{btime}/{etime}",method = RequestMethod.POST)
-    //@RequestMapping(value="/chart_data/{mn}",method = RequestMethod.POST)
     @ResponseBody
     public Result chartData(@PathVariable("mn") String mn,
                             @PathVariable("btime") String btime,
@@ -70,8 +68,4 @@ public class WaterHourController {
         result.setData(list);
         return result;
     }
-
-
-
-
 }

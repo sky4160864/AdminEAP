@@ -354,13 +354,13 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <!--<div class="content-wrapper" id="mainDiv"></div>-->
+  <div class="content-wrapper" id="mainDiv"></div>
 
   <!--tab-->
-  <div class="content-wrapper" >
-    <ul id="mainTab" class="nav nav-tabs"></ul>
-    <div id="mainTabContent" class="tab-content"></div>
-  </div>
+  <!--<div class="content-wrapper" >-->
+  <!--<ul id="mainTab" class="nav nav-tabs"></ul>-->
+  <!--<div id="mainTabContent" class="tab-content"></div>-->
+  <!--</div>-->
 
 
   <!-- /.content-wrapper -->
@@ -670,8 +670,8 @@
 
     $(function(){
         //首页默认加载
-//        loadPage("${basePath}/homePage");
-        loadPageTab("${basePath}/homePage","首页"); //tab
+        loadPage("${basePath}/homePage");
+//        loadPageTab("${basePath}/homePage","首页"); //tab
         //loadPage("${basePath}/user/list");
         //loadPage("${basePath}/activiti/task/todo/list");
         //loadPage("${basePath}/activiti/delegate/list");
@@ -679,8 +679,8 @@
 
         $("a[data-url]").click(function(evt){
 //            console.log("$(this)",$(this).text());
-            loadPageTab($(this).data("url"),$(this).text());//tab
-//            loadPage($(this).data("url"));
+//            loadPageTab($(this).data("url"),$(this).text());//tab
+            loadPage($(this).data("url"));
             $("ul.treeview-menu li").removeClass("active");
             $(this).parent().addClass("active");
         });

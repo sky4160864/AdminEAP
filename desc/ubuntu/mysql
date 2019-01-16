@@ -1,0 +1,19 @@
+mysql
+启动mysql：
+方式一：sudo /etc/init.d/mysql start
+方式二：sudo service mysql start
+
+停止mysql：
+方式一：sudo /etc/init.d/mysql stop
+方式二：sudo service mysql stop
+
+重启mysql：
+方式一：sudo /etc/init.d/mysql restart
+方式二：sudo service mysql restart
+
+
+
+#mysqld.cnf
+路径/etc/mysql/mysql.conf.d
+默认无sql_mode：ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+配置sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION

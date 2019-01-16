@@ -26,6 +26,9 @@ mysqldump -uroot -p1234 -h127.0.0.1 --databases admineap > e:/admineap.db
 恢复
 mysql -uroot -p1234 -h127.0.0.1 < e:/dbdump.db
 
+mysqldump -hlocalhost -uroot -p1234 --set-gtid-purged=OFF admineap --ignore-table admineap.jp_monitor_hour>E:/admineap_20190116.sql
+mysql -h172.96.242.63 -uroot -p1qaz2wsx_yfb admineap<E:/admineap_20190116.sql
+
 
 #因子编号表导入（水、气）
 1.修改id为Int并设置自增长，导入factor.7z
