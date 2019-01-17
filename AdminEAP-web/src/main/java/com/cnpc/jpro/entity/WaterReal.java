@@ -2,7 +2,6 @@ package com.cnpc.jpro.entity;
 
 import com.cnpc.framework.annotation.Header;
 import com.cnpc.framework.base.entity.BaseEntity;
-import com.cnpc.framework.base.entity.Dict;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Column;
@@ -10,9 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-//@Table(name="jp_water_hour")
+//@Table(name="jp_water_real")
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler", "fieldHandler" })
-public class WaterHour extends BaseEntity {
+public class WaterReal extends BaseEntity {
     private static final long serialVersionUID = 5L;
 
     //查询

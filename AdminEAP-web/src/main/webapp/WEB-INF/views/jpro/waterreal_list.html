@@ -1,0 +1,91 @@
+<section class="content-header">
+    <h1>实时数据(水)</h1>
+    <ol class="breadcrumb">
+        <li><a href="${basePath}"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">数据监控</a></li>
+        <li class="active">实时数据(水)</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="dataTables_filter" id="searchDiv_waterreal" style="display: none">
+                    <!--查询条件-->
+                    <!--<input type="checkbox" id="interval01" onclick="checkboxOnclick(this)">定时刷新-->
+                    <input type="search" placeholder="请输入企业名称" title="企业名称" name="entName"
+                           class="form-control" operator="like" likeOption="true">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" data-btn-type="search">查询</button>
+                        <button type="button" class="btn btn-default" data-btn-type="reset">重置</button>
+                        <button type="button" class="btn btn-info" data-pagename="waterreal_list" data-btn-type="custom"><i class="fa fa-check-square-o"></i>&nbsp;自定义列</button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <table id="waterreal_table" class="table table-bordered table-striped table-hover">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    var waterreal_table;
+    $(function () {
+        waterreal_table = new CommonTable("waterreal_table", "jp_water_real", "searchDiv_waterreal", null);
+    })
+
+    //超标警告
+    function fnRenderMonitor(value,type,rowObj) {
+        if(rowObj.w00000>rowObj.w01001){
+            return '<span class="label label-danger">'+value+'</span>';
+        }else if(rowObj.w00000>rowObj.w01018){
+            return '<span class="label label-warning">'+value+'</span>';
+        }else {
+            return value;
+        }
+    }
+
+
+    //网络
+    function fnRenderNet(value,type,rowObj) {
+        if(rowObj.w00000<30000){
+            return '<i class="fa fa-circle text-yellow"></i>';
+        }else{
+            return '<i class="fa fa-circle text-green"></i>';
+        }
+    }
+
+    function fnRenderMonitor3(value, type,rowObj) {
+        if(rowObj.w00000>rowObj.w01001){
+            return '<span class="label text-red">'+value+'</span>';
+        }else if(rowObj.w00000>rowObj.w01018){
+            return '<span class="label text-yellow">'+value+'</span>';
+        }else {
+            return value;
+        }
+    }
+
+    var num = 1;
+    var redoV;
+    function checkboxOnclick(checkbox) {
+        if ( checkbox.checked == true){
+            num = 1;
+            redoV=setInterval(function(){
+                if(num>5){
+                    $("#interval01").removeAttr("checked");
+                    clearInterval(redoV);
+                    return;
+                }
+                console.log("setInterval",num);
+                waterreal_table.reloadData();
+                num = num + 1;
+            },6000);
+        }
+
+    }
+
+</script>

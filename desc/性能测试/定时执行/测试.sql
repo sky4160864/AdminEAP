@@ -28,3 +28,10 @@ select * from jp_monitor_day_calc where mn='AAAAAAAABBBBBBBBCCCCCCCC199' and fac
 AAAAAAAABBBBBBBBCCCCCCCC199	w19002	2019-01-06 00:00:00	1184266.423500		2019-01-06 12:26:12 #double、DECIMAL 一致
 
 #select CURDATE(),DATE_ADD(CURDATE(),INTERVAL 1 DAY)
+
+
+#创建定时任务event(事件)
+create event second_event
+on schedule every 1 second
+on completion preserve disable
+do call test_proce();

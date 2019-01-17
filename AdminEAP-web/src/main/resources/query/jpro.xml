@@ -116,4 +116,57 @@
         <column key="net_status" header="网络状态" classType="String" allowSort="true" width="150" fnRender="fnRenderMonitor2"/>
         <column key="chart" header="图表" classType="String" allowSort="true" width="150" fnRender="fnRenderChart"/>
 </query>
+
+<query id="jp_water_real" key="id" tableName="实时数据(水)" className="com.cnpc.jpro.entity.WaterReal" widthType="px"
+       simpleSearch="false" service="monitorService" method="getWaterRealList" pageSize="20">
+        <column key="rowIndex" header="序号" width="80"/>
+        <column key="entName" header="企业名称" classType="String" allowSort="true" width="150"/>
+        <column key="mn" header="设备唯一标识" classType="String" allowSort="true" width="150" hidden="true"/>
+        <column key="mtime" header="时间" classType="String" allowSort="true" width="150"/>
+        <column key="w00000" header="污水" classType="String" allowSort="true" width="150" fnRender="fnRenderMonitor"/>
+        <column key="w01001" header="PH值" classType="String" allowSort="true" width="150" />
+        <column key="w01018" header="化学需氧量" classType="String" allowSort="true" width="150" fnRender="fnRenderMonitor3"/>
+        <column key="w21003" header="氨氮" classType="String" allowSort="true" width="150"/>
+        <column key="w21011" header="总磷" classType="String" allowSort="true" width="150"/>
+        <column key="w21001" header="总氮" classType="String" allowSort="true" width="150"/>
+        <column key="w20116" header="总铬" classType="String" allowSort="true" width="150"/>
+        <column key="w20117" header="六价铬" classType="String" allowSort="true" width="150"/>
+        <column key="w20121" header="总镍" classType="String" allowSort="true" width="150"/>
+        <column key="w20122" header="总铜" classType="String" allowSort="true" width="150"/>
+        <column key="w20120" header="总铅" classType="String" allowSort="true" width="150"/>
+        <column key="w20123" header="总锌" classType="String" allowSort="true" width="150"/>
+        <column key="w20115" header="总镉" classType="String" allowSort="true" width="150"/>
+        <column key="w01020" header="总有机碳" classType="String" allowSort="true" width="150"/>
+        <column key="w21016" header="氰化物" classType="String" allowSort="true" width="150"/>
+        <column key="w21017" header="氟化物" classType="String" allowSort="true" width="150"/>
+        <column key="net_status" header="网络状态" classType="String" allowSort="true" width="150" fnRender="fnRenderNet"/>
+</query>
+
+
+
+<!--本xml片段为代码生成器生成，时间：2019-01-17 13:06:28-->
+<query id="jp_gas_real" key="id" tableName="实时数据(气)" className="com.cnpc.jpro.entity.GasReal" widthType="px"
+       simpleSearch="false" service="monitorService" method="getGasRealList" pageSize="20">
+        <column key="rowIndex" header="序号" width="80"/>
+        <column key="entName" header="企业名称" classType="String" allowSort="true" width="150"/>
+        <column key="mn" header="设备唯一标识" classType="String" allowSort="true" width="150" hidden="true"/>
+        <column key="mtime" header="时间" classType="String" allowSort="true" width="150"/>
+        <column key="a21026" header="二氧化硫" classType="String" allowSort="true" width="150" fnRender="fnRenderMonitor1"/>
+        <column key="a21026Zs" header="二氧化硫折算值" classType="String" allowSort="true" width="150" />
+        <column key="a21002" header="氮氧化物" classType="String" allowSort="true" width="150" fnRender="fnRenderMonitor2"/>
+        <column key="a21002Zs" header="氮氧化物折算值" classType="String" allowSort="true" width="150"/>
+        <column key="a34013" header="烟尘" classType="String" allowSort="true" width="150"/>
+        <column key="a34013Zs" header="烟尘折算值" classType="String" allowSort="true" width="150"/>
+        <column key="a19001" header="氧气含量" classType="String" allowSort="true" width="150"/>
+        <column key="a01012" header="烟气温度" classType="String" allowSort="true" width="150"/>
+        <column key="a01013" header="烟气压力" classType="String" allowSort="true" width="150"/>
+        <column key="a01011" header="烟气流速" classType="String" allowSort="true" width="150"/>
+        <column key="a00000" header="废气" classType="String" allowSort="true" width="150"/>
+        <column key="a21005" header="一氧化碳" classType="String" allowSort="true" width="150"/>
+        <column key="a21005Zs" header="CO折算浓度" classType="String" allowSort="true" width="150"/>
+        <column key="a21024" header="氯化氢" classType="String" allowSort="true" width="150"/>
+        <column key="a21024Zs" header="HCL折算浓度" classType="String" allowSort="true" width="150"/>
+        <column key="a01014" header="烟气湿度" classType="String" allowSort="true" width="150"/>
+        <column key="net_status" header="网络状态" classType="String" allowSort="true" width="150" fnRender="fnRenderNet"/>
+</query>
 </queryContext>

@@ -20,6 +20,10 @@ mysql
     配置sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
 问题2：LINUX下的MYSQL默认是要区分表名大小写的
     配置lower_case_table_names=1
+问题3：定时event
+    添加 event_scheduler=ON
+问题4：时间
+    log_timestamps=SYSTEM
 
 
 redis清缓存
