@@ -26,8 +26,16 @@ mysqldump -uroot -p1234 -h127.0.0.1 --databases admineap > e:/admineap.db
 恢复
 mysql -uroot -p1234 -h127.0.0.1 < e:/dbdump.db
 
-mysqldump -hlocalhost -uroot -p1234 --set-gtid-purged=OFF admineap --ignore-table admineap.jp_monitor_hour>E:/admineap_20190116.sql
-mysql -h172.96.242.63 -uroot -p_yfb admineap<E:/admineap_20190116.sql
+mysqldump -hlocalhost -uroot -p1234 --set-gtid-purged=OFF admineap --ignore-table admineap.jp_monitor_hour>E:/admineap_20190118.sql
+mysql -h172.96.242.63 -uroot -p_yfb admineap<E:/admineap_20190118.sql
+
+
+show variables like 'max_allowed_packet';
+show variables like 'net_buffer_length';
+<1>.mysqldump -hlocalhost -uroot -p1234 -e --max_allowed_packet=4194304 --net_buffer_length=16384 admineap | gzip > E:/admineap_20190118.zip
+<2>.mysql -uroot -p1234 admineap | gzip < E:/admineap_20190118.zip
+<3>.mysql -uroot -p1234 --default-character-set=utf8 admineap_test < e:/admineap_20190118
+#<1>导出(313M)解压后(3640M)<3>导入测试9:42
 
 
 #因子编号表导入（水、气）
