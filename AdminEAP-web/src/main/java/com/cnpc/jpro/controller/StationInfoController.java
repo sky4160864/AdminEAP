@@ -1,17 +1,18 @@
 package com.cnpc.jpro.controller;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSON;
 import com.cnpc.framework.utils.StrUtil;
+import com.cnpc.jpro.entity.WaterHour;
+import org.hibernate.type.StringType;
+import org.hibernate.type.Type;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.cnpc.framework.base.service.BaseService;
 import com.cnpc.framework.annotation.RefreshCSRFToken;
@@ -35,6 +36,25 @@ public class StationInfoController {
     public String list(){
         return "jpro/stationinfo_list";
     }
+
+    @RequestMapping(value="/list_exp",method = RequestMethod.GET)
+    public String listExp(){
+        return "jpro/stationinfo_list_exp";
+    }
+
+    @RequestMapping("/getlistdata")
+    @ResponseBody
+    public Map<String,Object> getlistdata(
+            @RequestParam(value = "limit", required = false) Integer limit,
+            @RequestParam(value = "offset", required = false)Integer offset) {
+        Map<String, Object> map = new HashMap<>();
+        String sql = "select * from jp_station_info";
+        List<StationInfo> list = baseService.findBySql(sql, StationInfo.class);
+        map.put("total", 100);//假设共有100条数据
+        map.put("rows", list);
+        return map;
+    }
+
 
     @RefreshCSRFToken
     @RequestMapping(value="/edit",method = RequestMethod.GET)

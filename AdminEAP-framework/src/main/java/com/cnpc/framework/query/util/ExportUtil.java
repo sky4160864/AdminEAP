@@ -251,6 +251,7 @@ public class ExportUtil {
                     // 创建表头列
                     head = new Label(h - ignoreCount, headIndex, column.getHeader(), ft_head);
                     sheet.addCell(head);
+                    // if (column.getHeader().getBytes().length > sheet.getColumnWidth(h - ignoreCount))
                     if (column.getHeader().getBytes().length > sheet.getColumnWidth(h - ignoreCount))
                         sheet.setColumnView(h - ignoreCount, column.getHeader().getBytes().length + 2);
                 } else {

@@ -4,12 +4,8 @@ import com.cnpc.framework.activiti.service.RuntimePageService;
 import com.cnpc.framework.base.service.BaseService;
 import com.cnpc.framework.testng.BaseTest;
 import com.cnpc.framework.utils.StrUtil;
-import com.mysql.jdbc.Blob;
 import org.activiti.engine.*;
-import org.activiti.engine.identity.Group;
-import org.activiti.engine.impl.persistence.entity.DeploymentEntity;
 import org.activiti.engine.impl.persistence.entity.ResourceEntity;
-import org.activiti.engine.repository.Deployment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -19,7 +15,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
