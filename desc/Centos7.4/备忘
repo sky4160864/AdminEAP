@@ -1,41 +1,7 @@
-147147/~z4
+147147/shift~z4
 
-3306端口放开【开启阿里云安全组端口策略】https://www.cnblogs.com/funnyboy0128/p/7966531.html
+https://github.com/sky4160864/study/blob/f21c0a014c835b201786afd6fc402e75565f64bb/%E9%98%BF%E9%87%8C%E4%BA%91/Centos7.4.md#L20
 
-mysql5.6
-http://baijiahao.baidu.com/s?id=1597184796823517712&wfr=spider&for=pc
-
-    GRANT ALL PRIVILEGES ON *.* TO root@"%" IDENTIFIED BY "1234";
-    GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '1234' WITH GRANT OPTION;
-
-CentOS7下安装mysql5.7
-https://www.cnblogs.com/freely/p/8087885.html
+http://47.98.244.127:9090/admineap/
 
 
-
-防火墙
-https://jingyan.baidu.com/article/49ad8bce97bd965834d8fa8b.html
-
-    查看sudo systemctl status firewalld
-    关闭(重启后无效)   sudo systemctl stop firewalld
-    启动(重启后无效)   sudo systemctl start firewalld
-
-    关闭(重启后有效)   sudo systemctl disable firewalld
-    启动(重启后有效)   sudo systemctl enable firewalld
-
-
-打开 3306 端口
-    # firewall-cmd --zone=public --add-port=3306/tcp --permanent
-    success
-    # firewall-cmd --reload
-    success
-
-
-sudo systemctl stop firewalld.service
-sudo systemctl disable firewalld.service
-sudo systemctl mask firewalld.service
-
-
-centos 查询mysql配置文件位置https://www.cnblogs.com/chenkeyu/p/8416736.html
-    1.which mysqld  (”which 文件名“ ： 搜索命令所在路径及别名)
-    2./usr/sbin/mysqld --verbose --help | grep -A 1 'Default options'

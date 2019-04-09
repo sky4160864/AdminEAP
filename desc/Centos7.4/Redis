@@ -1,0 +1,21 @@
+【redis安装】
+https://www.cnblogs.com/renzhicai/p/7773080.html
+
+cd /usr/local
+
+下载安装包
+    wget http://download.redis.io/releases/redis-4.0.2.tar.gz
+解压安装包并安装
+    tar xzf redis-4.0.2.tar.gz
+    cd redis-4.0.2
+    make
+    make install
+
+
+启动和停止Redis[采用默认配置]
+    /usr/local/redis-4.0.2/utils/install_server.sh
+
+Redis服务查看、开启、关闭:
+a.通过ps -ef|grep redis命令查看Redis进程
+b.开启Redis服务操作通过/etc/init.d/redis_6379 start命令，也可通过（service redis_6379 start）
+c.关闭Redis服务操作通过/etc/init.d/redis_6379 stop命令，也可通过（service redis_6379 stop）

@@ -1,0 +1,65 @@
+3306端口放开【开启阿里云安全组端口策略】https://www.cnblogs.com/funnyboy0128/p/7966531.html
+
+mysql5.6
+http://baijiahao.baidu.com/s?id=1597184796823517712&wfr=spider&for=pc
+
+    GRANT ALL PRIVILEGES ON *.* TO root@"%" IDENTIFIED BY "1234";
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '1234' WITH GRANT OPTION;
+    flush privileges;
+
+CentOS7下安装mysql5.7
+https://www.cnblogs.com/freely/p/8087885.html
+
+
+配置文件
+    查找 mysql --help|grep 'my.cnf'   或者 which mysqld  (”which 文件名“ ： 搜索命令所在路径及别名)
+    vim /etc/my.cnf [问题2,问题3]
+
+            问题1：ONLY_FULL_GROUP_BY
+                默认无sql_mode：ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+                配置sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+            问题2：LINUX下的MYSQL默认是要区分表名大小写的
+                配置lower_case_table_names=1
+            问题3：定时event
+                添加 event_scheduler=ON
+            问题4：时间
+                log_timestamps=SYSTEM
+
+启动关闭
+    启动：systemctl start mysqld.service  或者  service mysql start
+    结束：systemctl stop mysqld.service
+    重启：systemctl restart mysqld.service
+
+开机启动
+    mysql --help|grep 'mysql'
+    cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
+
+防火墙
+https://jingyan.baidu.com/article/49ad8bce97bd965834d8fa8b.html
+
+    查看sudo systemctl status firewalld
+    关闭(重启后无效)   sudo systemctl stop firewalld
+    启动(重启后无效)   sudo systemctl start firewalld
+
+    关闭(重启后有效)   sudo systemctl disable firewalld
+    启动(重启后有效)   sudo systemctl enable firewalld
+
+
+打开 3306 端口
+    # firewall-cmd --zone=public --add-port=3306/tcp --permanent
+    success
+    # firewall-cmd --reload
+    success
+
+
+
+数据备份
+mkdir /usr/backup
+cd /usr/backup
+mysqldump -uroot -p1234 admineap | gzip >admineap_"`date +%Y%m%d`".sql.gz
+
+
+
+
+本机-->远程navicat执行
+
