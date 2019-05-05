@@ -1,0 +1,84 @@
+<html>
+<link rel="stylesheet" href="${basePath}/resources/external/layui/css/layui.css"  media="all">
+<link rel="stylesheet" href="${basePath}/resources/external/layui-ext/css/formSelects-v4.css"/>
+<link rel="stylesheet" href="${basePath}/resources/external/my.css"/>
+<section class="content-header">
+    <h1>
+        历史数据<small>列表</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="${basePath}"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">数据监控</a></li>
+        <li class="active">历史数据</li>
+    </ol>
+</section>
+<section class="content">
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div style="margin-top: 8px;margin-left: 5px;margin-bottom: 8px;">
+                <div class="demoTable" >
+                    <div class="layui-form">
+                        <!--企业-->
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <select id="ent_select" name="modules" lay-verify="required" lay-search="" lay-filter="afterSelectEnt" xm-select-skin="my-blue">
+                                    <option value="">选择企业</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!--因子-->
+                        <div class="layui-input-inline" style="width: 300px;">
+                            <select id="inf_select" name="city" xm-select="example5_4" xm-select-search="" xm-select-show-count="2" xm-select-skin="my-blue">
+                                <option value="">因子</option>
+                            </select>
+                        </div>
+
+                        <!--起止时间-->
+                        <div class="layui-input-inline" >
+                            <input type="text" class="layui-input" id="btime">
+                        </div>
+                        -
+                        <div class="layui-input-inline" >
+                            <input type="text" class="layui-input" id="etime">
+                        </div>
+                        <button class="layui-btn" data-type="init" style="background-color:#2B8CB9">搜索</button>
+                    </div>
+                </div>
+                <table class="layui-hide" id="lay_table_ent" lay-filter="lay_filter_ent"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['table','laydate','form','formSelects'], function(){
+        var selects = layui.formSelects; //
+        var form = layui.form; //
+        var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+
+
+
+        var laydate = layui.laydate;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#btime' //指定元素
+            ,theme: '#2B8CB9'
+        });
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#etime' //指定元素
+            ,theme: '#2B8CB9'
+        });
+
+
+        var table = layui.table;
+
+
+
+    });
+</script>
+
+</section>
+</html>

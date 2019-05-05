@@ -55,6 +55,14 @@ public class StationInfoController {
         return map;
     }
 
+    @RequestMapping("/get/station/all")
+    @ResponseBody
+    public List<StationInfo> getAllEnt() {
+        String sql = "select * from jp_station_info";
+        List<StationInfo> list = baseService.findBySql(sql, StationInfo.class);
+        return list;
+    }
+
 
     @RefreshCSRFToken
     @RequestMapping(value="/edit",method = RequestMethod.GET)

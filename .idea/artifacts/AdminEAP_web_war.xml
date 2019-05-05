@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="AdminEAP-web:war">
-    <output-path>$PROJECT_DIR$/AdminEAP-web/target</output-path>
-    <root id="archive" name="AdminEAP-web.war">
-      <element id="artifact" artifact-name="AdminEAP-web:war exploded" />
-    </root>
-  </artifact>
-</component>

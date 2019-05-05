@@ -12,7 +12,6 @@ public class QueryListener implements ServletContextListener {
     }
 
     public void contextInitialized(ServletContextEvent context) {
-
         QueryDefinition.getInstance().initQuery();
     }
 

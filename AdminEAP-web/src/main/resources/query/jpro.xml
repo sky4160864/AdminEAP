@@ -65,8 +65,8 @@
         <column key="name" header="企业名称" classType="String" allowSort="true" width="150"/>
         <column key="mn" header="设备唯一标识" classType="String" allowSort="true" width="150"/>
         <column key="address" header="地址" classType="String" allowSort="true" width="150"/>
-        <column key="lat" header="经度" classType="String" allowSort="true" width="150"/>
-        <column key="lng" header="纬度" classType="String" allowSort="true" width="150"/>
+        <column key="lng" header="经度" classType="String" allowSort="true" width="150"/>
+        <column key="lat" header="纬度" classType="String" allowSort="true" width="150"/>
         <column key="areaCode" header="地区" classType="String" allowSort="true" width="150"/>
         <column key="remark" header="备注" classType="String" allowSort="true" width="150"/>
 </query>

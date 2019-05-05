@@ -1,0 +1,10 @@
+
+/*formselect-v4*/
+div[xm-select-skin=my-blue] .xm-select-title div.xm-select-label>span {background-color: #2B8CB9;color: #FFF;border: 1px solid #2B8CB9}
+div[xm-select-skin=my-blue] .xm-select-title div.xm-select-label>span i {background-color: #2B8CB9; color: #FFF}
+div[xm-select-skin=my-blue] dl dd:not(.xm-dis-disabled) i {border-color: #2B8CB9}
+div[xm-select-skin=my-blue] dl dd.xm-select-this:not(.xm-dis-disabled) i {color: #2B8CB9}
+div[xm-select-skin=my-blue].xm-form-selected .xm-select,div[xm-select-skin=primary].xm-form-selected .xm-select:hover {border-color: #2B8CB9!important}
+
+/*晚于layui加载，覆盖layui样式*/
+.layui-form-select dl dd.layui-this{background-color:#2B8CB9;color:#fff}

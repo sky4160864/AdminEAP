@@ -36,12 +36,12 @@ public class StationInfo extends BaseEntity {
     private String address;
 
     @Header(name="经度")
-    @Column(name="lat")
-    private String lat;
-
-    @Header(name="纬度")
     @Column(name="lng")
     private String lng;
+
+    @Header(name="纬度")
+    @Column(name="lat")
+    private String lat;
 
     @Header(name="地区",joinClass = Dict.class,dataSource="330000") //只能取下一级
     @Column(name="area_code")
