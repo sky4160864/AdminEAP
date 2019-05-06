@@ -30,7 +30,7 @@
                         </div>
                         <!--factor-->
                         <div class="layui-input-inline" style="width: 300px;">
-                            <select id="factor_select" name="city" xm-select="factor_select" xm-select-search="" xm-select-show-count="2" >
+                            <select id="factor_select" name="city" xm-select="factor_select" xm-select-search="" xm-select-show-count="2" xm-select-skin="my-blue">
                                 <option value="">监测类型</option>
                             </select>
                         </div>
@@ -53,8 +53,6 @@
 <script>
     layui.use(['table','laydate','form','formSelects'], function(){
         var chart_legend_data = [];
-
-
         var form = layui.form; //
         var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
         $.get('${basePath}/stationinfo/get/station/all', function(res){
@@ -70,12 +68,13 @@
         });
 
         var selects = layui.formSelects;
+        var factors = [];
         form.on('select(after_select_ent)', function(data){
             selects.config('factor_select', {
                 searchUrl: '${basePath}/chart/get/factors?mn='+$('#ent_select').val(),
                 success: function(id, url, searchVal, result){
                     //console.log(result);
-                    var factors =[];
+                    factors =[];
                     chart_legend_data = [];
                     $.each(result.data,function (i,v) {
                         //console.log(v);
@@ -97,7 +96,7 @@
         });
         laydate.render({
             elem: '#etime' //指定元素
-            ,value:'2019-05-31'
+            ,value:'2019-05-01'
             ,theme: '#2B8CB9'
         });
 
@@ -114,9 +113,6 @@
             tooltip: {
                 trigger: 'axis'
             },
-            legend: {
-                data:chart_legend_data
-            },
             grid: {
                 left: '3%',
                 right: '4%',
@@ -130,8 +126,7 @@
             },
             xAxis: {
                 type: 'category',
-                boundaryGap: false,
-                data: ['周一','周二','周三','周四','周五','周六','周日']
+                boundaryGap: false
             },
             yAxis: {
                 type: 'value'
@@ -172,69 +167,31 @@
                     restore : {show: true},
                     saveAsImage : {show: true}
                 }
-            },
-            series: [
-                {
-                    name:'污水',
-                    type:'line',
-//                stack: '总量',
-                    data:[120, 132, 101, 134, 90, 230, 210]
-                },
-                {
-                    name:'PH值',
-                    type:'line',
-//                stack: '总量',
-                    data:[220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name:'化学需氧量',
-                    type:'line',
-//                stack: '总量',
-                    data:[150, 232, 201, 154, 190, 330, 410]
-                },
-                {
-                    name:'氮氧化物',
-                    type:'line',
-//                stack: '总量',
-                    data:[320, 332, 301, 334, 390, 330, 320]
-                }
-            ]
+            }
         };
         myChart.setOption(option);
 
         $('.demoTable .layui-btn').on('click', function(){
-            var url = basePath + "/waterhour/chart_data/"+$('#mn').val()+"/"+$('#btime').val()+"/"+$('#etime').val();
-            //    console.log(url);
 
-            ajaxPost(url, null, function (data) {
+            var url = basePath + "/chart/get/chart_data?mn="+$('#ent_select').val()+"&factors="+selects.value('factor_select', 'valStr')
+                +"&btime="+$('#btime').val()+"&etime="+$('#etime').val();
+            //console.log(chart_legend_data);
+            $.get(url, function(data){
+                //console.log(data);
+                var series_data = [];
                 if (data.success) {
-                    console.log(data);
-                    var legend = {data:['污水','PH值','化学需氧量','氮氧化物']};
-                    var xAxis_data = [];
-                    var series_data0 = [];
-                    var series_data1 = [];
-                    var series_data2 = [];
-                    var series_data3 = [];
-                    for(var i=0;i<data.data.length;i++){
-                        xAxis_data.push(data.data[i].mtime);
-                        series_data0.push(data.data[i].w00000);
-                        series_data1.push(data.data[i].w01001);
-                        series_data2.push(data.data[i].w01018);
-                        series_data3.push(data.data[i].w01020);
-                    }
-                    option["legend"]=legend;
-                    option["xAxis"]["data"]=xAxis_data;
-                    option["series"][0]["data"]=series_data0;
-                    option["series"][1]["data"]=series_data1;
-                    option["series"][2]["data"]=series_data2;
-                    option["series"][3]["data"]=series_data3;
+                    $.each(factors,function (i,v) {
+                        //console.log(data.data[v.value]);
+                        series_data.push({name:v.name,type:'line',data:data.data[v.value]});
+                    })
+                    option["legend"]={data:chart_legend_data};
+                    option["xAxis"]["data"]=data.data.xAxis;
+                    option["series"]=series_data;
                     //option["dataZoom"]=dataZoom;
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
                 }
             });
-
-            //console.log(option);
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
         });
 
     });
