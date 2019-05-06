@@ -53,29 +53,22 @@
             var ent_select = document.getElementById("ent_select"); //server为select定义的id
             $.each(res,function(i,val){
                 var option = document.createElement("option");  // 创建添加option属性
-                option.setAttribute("value",val.id); // 给option的value添加值
+                option.setAttribute("value",val.mn); // 给option的value添加值
                 option.innerText=val.name;     // 打印option对应的纯文本
                 ent_select.appendChild(option);           //给select添加option子标签
             });
             form.render("select");            // 刷性select，显示出数据
         });
-        form.render("select");
-        /*form.verify({
-            ent_select: function(value, item){ //value：表单的值、item：表单的DOM对象
-                if(value==null||value!=undefined||value==""){
-                    return '必须选择企业！';
-                }
-            }
-
-        });*/
 
         var laydate = layui.laydate;
         laydate.render({
             elem: '#btime' //指定元素
+            ,value:'2019-05-01'
             ,theme: '#2B8CB9'
         });
         laydate.render({
             elem: '#etime' //指定元素
+            ,value:'2019-05-31'
             ,theme: '#2B8CB9'
         });
 
@@ -84,18 +77,19 @@
         var $ = layui.$, active = {
             init:function () {
                 $.ajax({
-                    url: "",
+                    url: '${basePath}/cond_md/get/his_data_head?mn='+$('#ent_select').val(),
                     async: false,
                     success: function(rlt){
-
+                        //console.log(rlt);
+                        table_cols=[rlt.cols];
                     }
                 });
-                var url = '${basePath}/cond_md/get/his_data';
-                console.log(url);
+                //console.log("table_cols",table_cols);
+
                 //方法级渲染
                 table.render({
                     elem: '#lay_table_ent'
-                    ,url: url
+                    ,url: '${basePath}/cond_md/get/his_data'
                     ,cols: table_cols
                     //,skin: 'row'//表格风格
                     //,even: true //隔行背景
@@ -112,12 +106,14 @@
                     }
                     ,autoSort: false //禁用前端自动排序。
                     ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
-                        console.log(res);
+                        //console.log(res);
+                        var json_data = $.parseJSON(res.data);
+                        //console.log(json_data);
                         return {
                             "code": 0, //解析接口状态
                             "msg": res.message, //解析提示文本
-                            "count": res.A01_AMXJU8.length, //解析数据长度
-                            "data": res.A01_AMXJU8 //解析数据列表
+                            "count": res.count, //解析数据长度
+                            "data": json_data //解析数据列表
                         };
                     }
                     ,text: {

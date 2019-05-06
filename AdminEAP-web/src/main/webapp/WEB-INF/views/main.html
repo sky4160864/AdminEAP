@@ -42,7 +42,14 @@
   <link rel="stylesheet" href="${basePath}/resources/adminlte/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="${basePath}/resources/adminlte/dist/css/skins/_all-skins.css">
 
-
+  <style>
+    /*小屏幕时隐藏main-header*/
+    @media (max-width: 767px) {
+      .main-header {
+        margin-top: -50px;
+      }
+    }
+  </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini fixed">
 <a name="main"></a>
@@ -358,10 +365,10 @@
   <div class="content-wrapper" id="mainDiv"></div>
 
   <!--tab-->
-  <!--<div class="content-wrapper" >-->
-  <!--<ul id="mainTab" class="nav nav-tabs"></ul>-->
-  <!--<div id="mainTabContent" class="tab-content"></div>-->
-  <!--</div>-->
+  <!--<div class="content-wrapper" >
+    <ul id="mainTab" class="nav nav-tabs"></ul>
+    <div id="mainTabContent" class="tab-content"></div>
+  </div>-->
 
 
   <!-- /.content-wrapper -->
@@ -685,23 +692,38 @@
         return false;
     }
 
+    /*单页面加载 367行content-wrapper要修改*/
     $(function(){
         //首页默认加载
         loadPage("${basePath}/homePage");
-//        loadPageTab("${basePath}/homePage","首页"); //tab
+        //loadPageTab("${basePath}/homePage","首页"); //tab
         //loadPage("${basePath}/user/list");
         //loadPage("${basePath}/activiti/task/todo/list");
         //loadPage("${basePath}/activiti/delegate/list");
         //loadPage("${basePath}/markdown/preview?id=402880e958ecdff60158ed0c62ba0001")
 
         $("a[data-url]").click(function(evt){
-//            console.log("$(this)",$(this).text());
-//            loadPageTab($(this).data("url"),$(this).text());//tab
+            //console.log("$(this)",$(this).text());
+            //loadPageTab($(this).data("url"),$(this).text());//tab
             loadPage($(this).data("url"));
             $("ul.treeview-menu li").removeClass("active");
             $(this).parent().addClass("active");
         });
     });
+
+    /*tab加载 367行content-wrapper要修改，有些控件还有BUG*/
+    /*$(function(){
+        //首页默认加载
+        //loadPage("${basePath}/homePage");
+        loadPageTab("${basePath}/homePage","首页"); //tab
+        $("a[data-url]").click(function(evt){
+            //console.log("$(this)",$(this).text());
+            loadPageTab($(this).data("url"),$(this).text());//tab
+            //loadPage($(this).data("url"));
+            $("ul.treeview-menu li").removeClass("active");
+            $(this).parent().addClass("active");
+        });
+    });*/
 
 </script>
 </body>

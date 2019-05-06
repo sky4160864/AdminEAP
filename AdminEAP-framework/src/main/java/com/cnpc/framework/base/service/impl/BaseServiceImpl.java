@@ -230,6 +230,11 @@ public class BaseServiceImpl implements BaseService {
         return baseDao.executeSql(sql,params);
     }
 
+    public List executeSql4List(String sql,Map<String,Object> params) {
+        return baseDao.executeSql4List(sql,params);
+    }
+
+
     public <T> List<T> getListByCriteria(DetachedCriteria criteria, PageInfo page) {
 
         return baseDao.getListByCriteria(criteria, page);

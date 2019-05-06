@@ -1,0 +1,243 @@
+
+<link rel="stylesheet" href="${basePath}/resources/external/layui/css/layui.css"  media="all">
+<link rel="stylesheet" href="${basePath}/resources/external/layui-ext/css/formSelects-v4.css"/>
+<link rel="stylesheet" href="${basePath}/resources/external/my.css"/>
+<section class="content-header">
+    <h1>
+        数据分析<small>列表</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="${basePath}"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">数据分析</a></li>
+        <li class="active">历史曲线</li>
+    </ol>
+</section>
+<section class="content">
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div style="margin-top: 8px;margin-left: 5px;padding-bottom: 8px;">
+                <div class="demoTable" >
+
+                    <div class="layui-form">
+                        <!--企业-->
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <select id="ent_select" name="modules" lay-verify="ent_select" lay-verify="required" lay-search="" lay-filter="after_select_ent">
+                                    <option value="">选择企业</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--factor-->
+                        <div class="layui-input-inline" style="width: 300px;">
+                            <select id="factor_select" name="city" xm-select="factor_select" xm-select-search="" xm-select-show-count="2" >
+                                <option value="">监测类型</option>
+                            </select>
+                        </div>
+                        <!--起止时间-->
+                        <div class="layui-input-inline" >
+                            <input type="text" class="layui-input" id="btime">
+                        </div>
+                        -
+                        <div class="layui-input-inline" >
+                            <input type="text" class="layui-input" id="etime">
+                        </div>
+                        <button class="layui-btn" data-type="init" style="background-color:#2B8CB9">查询</button>
+                    </div>
+                    <div id="main" style="margin-top:10px;width: 90%;height: 450px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['table','laydate','form','formSelects'], function(){
+        var chart_legend_data = [];
+
+
+        var form = layui.form; //
+        var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+        $.get('${basePath}/stationinfo/get/station/all', function(res){
+            //console.log(res);
+            var ent_select = document.getElementById("ent_select"); //server为select定义的id
+            $.each(res,function(i,val){
+                var option = document.createElement("option");  // 创建添加option属性
+                option.setAttribute("value",val.mn); // 给option的value添加值
+                option.innerText=val.name;     // 打印option对应的纯文本
+                ent_select.appendChild(option);           //给select添加option子标签
+            });
+            form.render("select");            // 刷性select，显示出数据
+        });
+
+        var selects = layui.formSelects;
+        form.on('select(after_select_ent)', function(data){
+            selects.config('factor_select', {
+                searchUrl: '${basePath}/chart/get/factors?mn='+$('#ent_select').val(),
+                success: function(id, url, searchVal, result){
+                    //console.log(result);
+                    var factors =[];
+                    chart_legend_data = [];
+                    $.each(result.data,function (i,v) {
+                        //console.log(v);
+                        factors.push({name:v.factorName,value:v.factorCode,selected:"selected"});
+                        chart_legend_data.push(v.factorName);
+                    });
+                    //console.log(factors);
+                    //local模式
+                    selects.data('factor_select', 'local', {arr: factors});
+                }
+            });
+        });
+
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#btime' //指定元素
+            ,value:'2019-05-01'
+            ,theme: '#2B8CB9'
+        });
+        laydate.render({
+            elem: '#etime' //指定元素
+            ,value:'2019-05-31'
+            ,theme: '#2B8CB9'
+        });
+
+
+
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        // 指定图表的配置项和数据
+        option = {
+            title: {
+                text: '历史曲线'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:chart_legend_data
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['周一','周二','周三','周四','周五','周六','周日']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            grid: {
+                top: '12%',
+                left: '1%',
+                right: '10%',
+                containLabel: true
+            },
+            dataZoom: [
+                {
+                    show: true,
+                    start: 0,//94
+                    end: 100
+                },
+                {
+                    type: 'inside',
+                    start: 0,//94
+                    end: 100
+                },
+                {
+                    show: true,
+                    yAxisIndex: 0,
+                    filterMode: 'empty',
+                    width: 30,
+                    height: '80%',
+                    showDataShadow: false,
+                    left: '93%'
+                },
+            ],
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            series: [
+                {
+                    name:'污水',
+                    type:'line',
+//                stack: '总量',
+                    data:[120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name:'PH值',
+                    type:'line',
+//                stack: '总量',
+                    data:[220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name:'化学需氧量',
+                    type:'line',
+//                stack: '总量',
+                    data:[150, 232, 201, 154, 190, 330, 410]
+                },
+                {
+                    name:'氮氧化物',
+                    type:'line',
+//                stack: '总量',
+                    data:[320, 332, 301, 334, 390, 330, 320]
+                }
+            ]
+        };
+        myChart.setOption(option);
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var url = basePath + "/waterhour/chart_data/"+$('#mn').val()+"/"+$('#btime').val()+"/"+$('#etime').val();
+            //    console.log(url);
+
+            ajaxPost(url, null, function (data) {
+                if (data.success) {
+                    console.log(data);
+                    var legend = {data:['污水','PH值','化学需氧量','氮氧化物']};
+                    var xAxis_data = [];
+                    var series_data0 = [];
+                    var series_data1 = [];
+                    var series_data2 = [];
+                    var series_data3 = [];
+                    for(var i=0;i<data.data.length;i++){
+                        xAxis_data.push(data.data[i].mtime);
+                        series_data0.push(data.data[i].w00000);
+                        series_data1.push(data.data[i].w01001);
+                        series_data2.push(data.data[i].w01018);
+                        series_data3.push(data.data[i].w01020);
+                    }
+                    option["legend"]=legend;
+                    option["xAxis"]["data"]=xAxis_data;
+                    option["series"][0]["data"]=series_data0;
+                    option["series"][1]["data"]=series_data1;
+                    option["series"][2]["data"]=series_data2;
+                    option["series"][3]["data"]=series_data3;
+                    //option["dataZoom"]=dataZoom;
+                }
+            });
+
+            //console.log(option);
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        });
+
+    });
+</script>
+
+</section>

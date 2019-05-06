@@ -1,15 +1,16 @@
 package com.cnpc.jpro.entity;
 
 import com.cnpc.framework.annotation.Header;
+import com.cnpc.framework.base.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 @Entity
-//@Table(name="jp_factor_relation")
+@Table(name="jp_factor_relation")
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler", "fieldHandler" })
-public class FactorRelation {
-
+public class FactorRelation extends BaseEntity {
+    private static final long serialVersionUID = 7L;
     @Header(name="站点MN")
     @Column(name="mn")
     private String mn;
@@ -21,6 +22,10 @@ public class FactorRelation {
     @Header(name="编码")
     @Column(name="factor_code")
     private String factorCode;
+
+    @Header(name="单位")
+    @Column(name="factor_unit")
+    private String factorUnit;
 
     @Header(name="下限值")
     @Column(name="lower_limit")
@@ -42,27 +47,19 @@ public class FactorRelation {
         this.mn = mn;
     }
 
-    public String getInfOrder() {
-        return factorOrder;
-    }
-
-    public void setInfOrder(String factorOrder) {
-        this.factorOrder = factorOrder;
-    }
-
-    public String getInfName() {
+    public String getFactorName() {
         return factorName;
     }
 
-    public void setInfName(String factorName) {
+    public void setFactorName(String factorName) {
         this.factorName = factorName;
     }
 
-    public String getInfCode() {
+    public String getFactorCode() {
         return factorCode;
     }
 
-    public void setInfCode(String factorCode) {
+    public void setFactorCode(String factorCode) {
         this.factorCode = factorCode;
     }
 
@@ -80,5 +77,21 @@ public class FactorRelation {
 
     public void setUpperLimit(String upperLimit) {
         this.upperLimit = upperLimit;
+    }
+
+    public String getFactorOrder() {
+        return factorOrder;
+    }
+
+    public void setFactorOrder(String factorOrder) {
+        this.factorOrder = factorOrder;
+    }
+
+    public String getFactorUnit() {
+        return factorUnit;
+    }
+
+    public void setFactorUnit(String factorUnit) {
+        this.factorUnit = factorUnit;
     }
 }

@@ -2,6 +2,7 @@ package com.cnpc.framework.base.dao.impl;
 
 import com.cnpc.framework.base.dao.BaseDao;
 import com.cnpc.framework.base.pojo.PageInfo;
+import org.apache.poi.ss.formula.functions.T;
 import org.hibernate.*;
 import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
@@ -330,6 +331,23 @@ public class BaseDaoImpl implements BaseDao {
         return query.executeUpdate();
     }
 
+    public List executeSql4List(String sql,Map<String,Object> params){
+        Query query = this.getCurrentSession().createSQLQuery(sql);
+        if (params != null && !params.isEmpty()) {
+            for (String key : params.keySet()) {
+                Object obj = params.get(key);
+                if (obj instanceof Collection<?>) {
+                    query.setParameterList(key, (Collection<?>) obj);
+                } else if (obj instanceof Object[]) {
+                    query.setParameterList(key, (Object[]) obj);
+                } else {
+                    query.setParameter(key, obj);
+                }
+            }
+        }
+        return query.list();
+    }
+
     @SuppressWarnings("unchecked")
     public List<Map<String, Object>> findMapBySql(String sql) {
 
@@ -392,14 +410,18 @@ public class BaseDaoImpl implements BaseDao {
     public List findMapBySql(String sql, Object[] params, Type[] types, Class clazz) {
 
         SQLQuery query = this.getCurrentSession().createSQLQuery(sql);
-        if (clazz != null) {
+        /*if (clazz != null) {
             query.setResultTransformer(Transformers.aliasToBean(clazz));
         } else {
             query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
-        }
+        }*/
         query.setParameters(params, types);
+        if (clazz != null) {
+            query.addEntity(clazz);
+        }
         return query.list();
     }
+
 
     @Override
     public <T> List<T> find(String sql, Map<String,Object> params, Class<T> clazz) {

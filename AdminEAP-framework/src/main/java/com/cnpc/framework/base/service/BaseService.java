@@ -281,6 +281,8 @@ public interface BaseService {
 
     int executeSql(String sql,Map<String,Object> params);
 
+    List executeSql4List(String sql,Map<String,Object> params);
+
     <T> List<T> getListByCriteria(DetachedCriteria criteria, PageInfo page);
 
     List<?> getListByCriteria(DetachedCriteria criteria, Integer startPage, Integer pageSize);

@@ -670,17 +670,9 @@
 
     $(function(){
         //首页默认加载
-//        loadPage("${basePath}/homePage");
         loadPageTab("${basePath}/homePage","首页"); //tab
-        //loadPage("${basePath}/user/list");
-        //loadPage("${basePath}/activiti/task/todo/list");
-        //loadPage("${basePath}/activiti/delegate/list");
-        //loadPage("${basePath}/markdown/preview?id=402880e958ecdff60158ed0c62ba0001")
-
         $("a[data-url]").click(function(evt){
-//            console.log("$(this)",$(this).text());
             loadPageTab($(this).data("url"),$(this).text());//tab
-//            loadPage($(this).data("url"));
             $("ul.treeview-menu li").removeClass("active");
             $(this).parent().addClass("active");
         });

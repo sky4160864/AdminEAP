@@ -82,6 +82,7 @@ body {
   .sidebar-collapse .main-footer {
     margin-left: 0;
   }
+
 }
 @media (max-width: 767px) {
   .sidebar-open .content-wrapper,
@@ -105,6 +106,7 @@ body {
   color: #444;
   border-top: 1px solid #d2d6de;
 }
+
 /* Fixed layout */
 .fixed .main-header,
 .fixed .main-sidebar,
