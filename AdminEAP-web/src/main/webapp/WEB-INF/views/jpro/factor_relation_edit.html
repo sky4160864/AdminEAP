@@ -1,0 +1,143 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><li class="fa fa-remove"></li></button>
+    <h5 class="modal-title"></h5>
+</div>
+
+<div class="modal-body">
+    <form id="factor_relation_form" name="factor_relation_form" class="form-horizontal">
+        <input type="hidden" name="id">
+        <input type="hidden" name="version">
+        <input type="hidden" name="createDateTime" data-flag="date" data-format="yyyy-mm-dd hh:ii:ss">
+        <input type="hidden" name="deleted" value="0">
+        <input type='hidden' value="${CSRFToken}" id='csrftoken'>
+        <div class="box-body">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">站点MN<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="mn" name="mn" placeholder="请填写站点MN">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">名称<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="factorName" name="factorName" placeholder="请填写名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">编码<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="factorCode" name="factorCode" placeholder="请填写编码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">单位<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="factorUnit" name="factorUnit" placeholder="请填写单位">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">下限值<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="lowerLimit" name="lowerLimit" placeholder="请填写下限值">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">上限值<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="upperLimit" name="upperLimit" placeholder="请填写上限值">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">排序<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="factorSort" name="factorSort" placeholder="请填写排序">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer text-right">
+            <button type="button" class="btn btn-default" data-btn-type="cancel" data-dismiss="modal">取消</button>
+            <button type="submit" class="btn btn-primary" data-btn-type="save">提交</button>
+        </div>
+    </form>
+</div>
+<script>
+    var form;
+    var id="${id?default(0)}";
+    $(function(){
+        //初始化表单
+        form=$("#factor_relation_form").form();
+        //数据校验
+        $("#factor_relation_form").bootstrapValidator({
+            message : '请输入有效值',
+            feedbackIcons : {
+                valid : 'glyphicon glyphicon-ok',
+                invalid : 'glyphicon glyphicon-remove',
+                validating : 'glyphicon glyphicon-refresh'
+            },
+            submitHandler : function() {
+                modals.confirm('确认保存？', function() {
+                    var factor_relation = form.getFormSimpleData();
+                    ajaxPost(basePath+'/factor_relation/save',factor_relation, function(data) {
+                        if(data.success){
+                            if(id!="0"){
+                                modals.hideWin(winId);
+                                factor_relationTable.reloadRowData(id);
+                            }else{
+                                modals.hideWin(winId);
+                                factor_relationTable.reloadData();
+                            }
+                        }
+                    });
+                });
+            },
+            fields : {
+                "mn":{
+                    validators:{
+                        notEmpty:{message:'站点MN不能为空'}
+                    }
+                },
+                "factorName":{
+                    validators:{
+                        notEmpty:{message:'名称不能为空'}
+                    }
+                },
+                "factorCode":{
+                    validators:{
+                        notEmpty:{message:'编码不能为空'}
+                    }
+                },
+                "factorUnit":{
+                    validators:{
+                        notEmpty:{message:'单位不能为空'}
+                    }
+                },
+                "lowerLimit":{
+                    validators:{
+                        notEmpty:{message:'下限值不能为空'}
+                    }
+                },
+                "upperLimit":{
+                    validators:{
+                        notEmpty:{message:'上限值不能为空'}
+                    }
+                },
+                "factorSort":{
+                    validators:{
+                        notEmpty:{message:'排序不能为空'}
+                    }
+                }
+            }
+        });
+        //初始化控件
+        form.initComponent();
+        //编辑回填
+        if(id!=0){
+            ajaxPost(basePath+"/factor_relation/get/"+id,null,function(data){
+                form.initFormData(data);
+            })
+        }
+    });
+
+</script>

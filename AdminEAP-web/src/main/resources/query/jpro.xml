@@ -169,4 +169,44 @@
         <column key="a01014" header="烟气湿度" classType="String" allowSort="true" width="150"/>
         <column key="net_status" header="网络状态" classType="String" allowSort="true" width="150" fnRender="fnRenderNet"/>
 </query>
+
+
+<!--本xml片段为代码生成器生成，时间：2019-05-07 08:41:15-->
+<query id="factor_relation" key="id" tableName="监测配置列表" className="com.cnpc.jpro.entity.FactorRelation" widthType="px">
+        <sql><![CDATA[
+                select b.id,a.name mn,factor_Name factorName,factor_Code factorCode,factor_Unit factorUnit,
+                        lower_Limit lowerLimit,upper_Limit upperLimit,factor_sort factorSort
+                from jp_station_info a
+                inner join jp_factor_relation b on(a.mn=b.mn)
+                where 1=1
+                order by b.mn,factor_sort
+			]]>
+        </sql>
+        <column key="rowIndex" header="序号" width="80"/>
+        <column key="mn" header="企业名称" classType="String" allowSort="true" width="150"/>
+        <column key="factorName" header="名称" classType="String" allowSort="true" width="150"/>
+        <column key="factorCode" header="编码" classType="String" allowSort="true" width="150"/>
+        <column key="factorUnit" header="单位" classType="String" allowSort="true" width="150"/>
+        <column key="lowerLimit" header="下限值" classType="String" allowSort="true" width="150"/>
+        <column key="upperLimit" header="上限值" classType="String" allowSort="true" width="150"/>
+        <column key="factorSort" header="排序" classType="String" allowSort="true" width="150"/>
+</query>
+
+
+<!--本xml片段为代码生成器生成，时间：2019-05-07 12:31:44-->
+<query id="jp_factor_rule" key="id" tableName="规则配置列表" className="com.cnpc.jpro.entity.FactorRule" widthType="px">
+        <sql><![CDATA[
+                select a.id,b.name stationId,rule_Name ruleName,rule_Content ruleContent,rule_Desc ruleDesc
+                from jp_factor_rule a
+                inner join jp_station_info b on(a.station_Id=b.id)
+                where 1=1
+                order by b.mn,rule_Name
+			]]>
+        </sql>
+        <column key="rowIndex" header="序号" width="80"/>
+        <column key="stationId" header="企业名称" classType="String" allowSort="true" width="150"/>
+        <column key="ruleName" header="规则名称" classType="String" allowSort="true" width="150"/>
+        <column key="ruleContent" header="规则内容" classType="String" allowSort="true" width="150"/>
+        <column key="ruleDesc" header="规则描述" classType="String" allowSort="true" width="150"/>
+</query>
 </queryContext>

@@ -24,13 +24,14 @@ BEGIN
 		END IF;
 		#设置起止结束日期
 		SET beg_date = DATE_FORMAT('2019-05-01', '%Y-%m-%d');
-		SET end_date = DATE_FORMAT('2019-08-01', '%Y-%m-%d');
+		SET end_date = DATE_FORMAT('2019-06-01', '%Y-%m-%d');
 		WHILE beg_date < end_date DO
 				SET beg_date = DATE_ADD(beg_date,INTERVAL 10 MINUTE);
 				set bnum = bnum+1;
 				SET @sqlstr = concat(@sqlstr,'(DATE_FORMAT(''',beg_date,''',''%Y-%m-%d %H:%i:%S''),''',qry_mn,''',''',qry_code,''',',round(rand()*100,4),')');
 
 				IF MOD(bnum,500)=0 THEN
+						SET @sqlstr = concat(@sqlstr,'ON DUPLICATE KEY UPDATE utime=NOW()');
 						#打印输出
 						#SELECT @sqlstr;
 						prepare stmt from @sqlstr;

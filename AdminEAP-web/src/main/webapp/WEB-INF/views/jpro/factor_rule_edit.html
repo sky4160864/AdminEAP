@@ -1,0 +1,106 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><li class="fa fa-remove"></li></button>
+    <h5 class="modal-title"></h5>
+</div>
+
+<div class="modal-body">
+    <form id="factor_rule_form" name="factor_rule_form" class="form-horizontal">
+        <input type="hidden" name="id">
+        <input type="hidden" name="version">
+        <input type="hidden" name="createDateTime" data-flag="date" data-format="yyyy-mm-dd hh:ii:ss">
+        <input type="hidden" name="deleted" value="0">
+        <input type='hidden' value="${CSRFToken}" id='csrftoken'>
+        <div class="box-body">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">企业名称<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <select name="stationId" id="stationId" data-code="true" data-flag="stationSelector" data-placeholder="请选择企业名称" class="form-control select2" style="width:100%" data-blank="true"></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">规则名称<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="ruleName" name="ruleName" placeholder="请填写规则名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">规则内容<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="ruleContent" name="ruleContent" placeholder="请填写规则内容">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">规则描述</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="ruleDesc" name="ruleDesc" placeholder="请填写规则描述">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer text-right">
+            <button type="button" class="btn btn-default" data-btn-type="cancel" data-dismiss="modal">取消</button>
+            <button type="submit" class="btn btn-primary" data-btn-type="save">提交</button>
+        </div>
+    </form>
+</div>
+<script>
+    var form;
+    var id="${id?default(0)}";
+    $(function(){
+        //初始化表单
+        form=$("#factor_rule_form").form();
+        //数据校验
+        $("#factor_rule_form").bootstrapValidator({
+            message : '请输入有效值',
+            feedbackIcons : {
+                valid : 'glyphicon glyphicon-ok',
+                invalid : 'glyphicon glyphicon-remove',
+                validating : 'glyphicon glyphicon-refresh'
+            },
+            submitHandler : function() {
+                modals.confirm('确认保存？', function() {
+                    var factor_rule = form.getFormSimpleData();
+                    ajaxPost(basePath+'/factor_rule/save',factor_rule, function(data) {
+                        if(data.success){
+                            if(id!="0"){
+                                modals.hideWin(winId);
+                                factor_ruleTable.reloadRowData(id);
+                            }else{
+                                modals.hideWin(winId);
+                                factor_ruleTable.reloadData();
+                            }
+                        }
+                    });
+                });
+            },
+            fields : {
+                "stationId":{
+                    validators:{
+                        notEmpty:{message:'企业名称不能为空'}
+                    }
+                },
+                "ruleName":{
+                    validators:{
+                        notEmpty:{message:'规则名称不能为空'}
+                    }
+                },
+                "ruleContent":{
+                    validators:{
+                        notEmpty:{message:'规则内容不能为空'}
+                    }
+                }
+            }
+        });
+        //初始化控件
+        form.initComponent();
+        //编辑回填
+        if(id!=0){
+            ajaxPost(basePath+"/factor_rule/get/"+id,null,function(data){
+                form.initFormData(data);
+            })
+        }
+    });
+
+</script>

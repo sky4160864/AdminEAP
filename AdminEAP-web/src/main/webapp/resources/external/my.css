@@ -8,3 +8,5 @@ div[xm-select-skin=my-blue].xm-form-selected .xm-select,div[xm-select-skin=prima
 
 /*晚于layui加载，覆盖layui样式*/
 .layui-form-select dl dd.layui-this{background-color:#2B8CB9;color:#fff}
+.layui-laypage .layui-laypage-curr .layui-laypage-em{background-color:#2B8CB9;}
+

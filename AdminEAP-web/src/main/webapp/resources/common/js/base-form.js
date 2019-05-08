@@ -27,6 +27,8 @@
         this.dictSelectorElement = "[data-flag='dictSelector']";
         this.urlSelectorElement = "[data-flag='urlSelector']";
         this.select2Element = ".select2";
+        // 站点select
+        this.stationSelectorElement = "[data-flag='stationSelector']";
         this.init();
     }
 
@@ -44,6 +46,8 @@
         this.initUrlSelector();
         //stSelector
         this.initStSelector();
+        //stationSelector
+        this.initStationSelector();
     }
 
     //主要解决icheck 校验对勾错位的问题
@@ -176,6 +180,35 @@
     }
 
     /**
+     * 站点的控件 add_hjh_20190507
+     */
+    BaseForm.prototype.initStationSelector = function (stationSelectorElement) {
+        var _this = this;
+        var element = stationSelectorElement ? stationSelectorElement : this.stationSelectorElement;
+        var elements = this.$element.find(element);
+        $(elements).each(function (index, item) {
+            var code = $(item).data("code");
+            var autoload = $(item).data("autoload") == "false" ? false : true;
+            //console.log("initStationSelector->code:"+code+"||autoload:"+autoload);
+            if (code) {
+                if (autoload) {
+                    if ($(item).is("input"))
+                        _this.buildAjaxStationBox(this, code);
+                    else if ($(item).is("select"))
+                        _this.buildAjaxStationSelect(this, code);
+                } else {
+                    var that = this;
+                    $(this).click(function () {
+                        _this.buildAjaxStationSelect(that, code);
+                    })
+                }
+            }else{
+                // console.log("initStSelector->code: ffffffffffffffffff");
+            }
+        });
+    }
+
+    /**
      * 字典类型的控件
      */
     BaseForm.prototype.initDictSelector = function (dictSelectorElement) {
@@ -227,6 +260,12 @@
         });
     }
 
+    //数据来源为系统编码的radio checkbox  add_hjh_20190507
+    BaseForm.prototype.buildAjaxStationBox = function (selector, dictCode) {
+        var builder = this.buildAjaxBox(selector);
+        $dataSource.getStation(dictCode, builder);
+    }
+
     //数据来源为系统编码的radio checkbox  add_hjh_20190104
     BaseForm.prototype.buildAjaxStBox = function (selector, dictCode) {
         var builder = this.buildAjaxBox(selector);
@@ -249,6 +288,12 @@
         var builder = this.buildAjaxSelector(selector);
         $dataSource.getSt(stCode, builder);
     }
+    //数据来源为字典的下拉框
+    BaseForm.prototype.buildAjaxStationSelect = function (selector, stationCode) {
+        var builder = this.buildAjaxSelector(selector);
+        $dataSource.getStation(stationCode, builder);
+    }
+
     //数据来源为字典的下拉框
     BaseForm.prototype.buildAjaxDictSelect = function (selector, dictCode) {
         var builder = this.buildAjaxSelector(selector);

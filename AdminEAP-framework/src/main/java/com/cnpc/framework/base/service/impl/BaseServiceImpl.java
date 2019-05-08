@@ -230,8 +230,12 @@ public class BaseServiceImpl implements BaseService {
         return baseDao.executeSql(sql,params);
     }
 
+
     public List executeSql4List(String sql,Map<String,Object> params) {
-        return baseDao.executeSql4List(sql,params);
+        return baseDao.executeSql4List(sql,params,false);
+    }
+    public List executeSql4List(String sql,Map<String,Object> params,boolean transForm) {
+        return baseDao.executeSql4List(sql,params,transForm);
     }
 
 

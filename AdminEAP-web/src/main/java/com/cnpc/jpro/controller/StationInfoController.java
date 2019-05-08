@@ -1,6 +1,5 @@
 package com.cnpc.jpro.controller;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 import javax.annotation.Resource;
@@ -8,9 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSON;
 import com.cnpc.framework.utils.StrUtil;
-import com.cnpc.jpro.entity.WaterHour;
-import org.hibernate.type.StringType;
-import org.hibernate.type.Type;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -114,6 +110,11 @@ public class StationInfoController {
         }
     }
 
-
+    @RequestMapping(value = "/getStationByCode", method = RequestMethod.POST)
+    @ResponseBody
+    public List<StationInfo> getStByCode(String code) {
+        //return baseService.getStsByCode(code);
+        return baseService.find("from StationInfo");
+    }
 
 }

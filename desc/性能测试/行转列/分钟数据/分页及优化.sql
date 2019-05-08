@@ -5,7 +5,7 @@ where mn='AAAAAAAABBBBBBBBCCCCCCCC000'
 	and mtime>=DATE_FORMAT('2019-05-01','%Y-%m-%d')
 	and mtime<DATE_ADD(DATE_FORMAT('2019-05-31','%Y-%m-%d'),INTERVAL 1 DAY)
 
-select * from jp_factor_relation where mn='AAAAAAAABBBBBBBBCCCCCCCC000' order by factor_order
+select * from jp_factor_relation where mn='AAAAAAAABBBBBBBBCCCCCCCC000' order by factor_sort
 
 explain
 select mn,mtime,

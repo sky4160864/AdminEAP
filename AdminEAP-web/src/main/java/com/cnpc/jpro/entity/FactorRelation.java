@@ -36,8 +36,8 @@ public class FactorRelation extends BaseEntity {
     private String upperLimit;
 
     @Header(name="排序")
-    @Column(name="factor_order")
-    private String factorOrder;
+    @Column(name="factor_sort")
+    private int factorSort;
 
     public String getMn() {
         return mn;
@@ -79,12 +79,12 @@ public class FactorRelation extends BaseEntity {
         this.upperLimit = upperLimit;
     }
 
-    public String getFactorOrder() {
-        return factorOrder;
+    public int getFactorSort() {
+        return factorSort;
     }
 
-    public void setFactorOrder(String factorOrder) {
-        this.factorOrder = factorOrder;
+    public void setFactorSort(int factorSort) {
+        this.factorSort = factorSort;
     }
 
     public String getFactorUnit() {
@@ -94,4 +94,6 @@ public class FactorRelation extends BaseEntity {
     public void setFactorUnit(String factorUnit) {
         this.factorUnit = factorUnit;
     }
+
+
 }

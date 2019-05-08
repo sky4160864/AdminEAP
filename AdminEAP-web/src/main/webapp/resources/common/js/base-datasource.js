@@ -50,6 +50,42 @@
         return st;
     };
 
+
+    BaseDataSource.prototype.getStationList = function(code) {
+        // console.log("getStList->code:"+code);
+        var station = null;
+        var obj = {
+            "code" : code
+        };
+        $.ajax({
+            type : "post",
+            async : false,
+            url : basePath+"/stationinfo/getStationByCode",
+            data : obj,
+            dataType : "json",
+            success : function(data) {
+                //console.log(data);
+                station = data;
+            },
+            error : function() {
+                modals.error("站点编码" + code + "获取异常,请检查");
+            }
+        });
+        return station;
+    };
+
+    /**
+     * stationCode 系统编码 callback 回调函数
+     */
+    BaseDataSource.prototype.getStation = function(stationCode, callback) {
+        if (!stationCode)
+            return null;
+        var st = this.getStationList(stationCode);
+        if (st && st.length > 0&&callback) {
+            callback(st);
+        }
+    };
+
     /**
      * stCode 系统编码 callback 回调函数
      */

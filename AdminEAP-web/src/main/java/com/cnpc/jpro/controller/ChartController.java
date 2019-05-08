@@ -38,7 +38,7 @@ public class ChartController {
     @RequestMapping(value="/get/factors",method = RequestMethod.GET)
     @ResponseBody
     public List<FactorRelation> getStationFactors(String mn){
-        String sql1 = "select * from jp_factor_relation where mn=? order by factor_order";
+        String sql1 = "select * from jp_factor_relation where mn=? order by factor_sort";
         return  baseService.findMapBySql(sql1, new Object[]{mn}, new Type[]{StringType.INSTANCE}, FactorRelation.class);
     }
 

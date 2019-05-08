@@ -331,7 +331,8 @@ public class BaseDaoImpl implements BaseDao {
         return query.executeUpdate();
     }
 
-    public List executeSql4List(String sql,Map<String,Object> params){
+    public List executeSql4List(String sql,Map<String,Object> params,boolean transForm){
+    //public List executeSql4List(String sql,Map<String,Object> params,Class clazz,Map<String,Object> scalar){
         Query query = this.getCurrentSession().createSQLQuery(sql);
         if (params != null && !params.isEmpty()) {
             for (String key : params.keySet()) {
@@ -345,8 +346,18 @@ public class BaseDaoImpl implements BaseDao {
                 }
             }
         }
+        /*if (clazz != null) {
+            for(Map.Entry<String,Object> entry:scalar.entrySet()){
+                query
+            }
+            query.setResultTransformer(Transformers.aliasToBean(clazz));
+        }*/
+        if(transForm){
+            query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+        }
         return query.list();
     }
+
 
     @SuppressWarnings("unchecked")
     public List<Map<String, Object>> findMapBySql(String sql) {

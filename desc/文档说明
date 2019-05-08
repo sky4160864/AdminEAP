@@ -1,3 +1,10 @@
 <select name="stCode.id" id="stCode.id" data-code="true" data-flag="stSelector" data-placeholder="请选择系统编码" class="form-control select2" style="width:100%" data-blank="true"></select>
 data-flag="stSelector"为控件名，新添加的话需要在base-form.js添加
 data-code="true"为查询数据，stcode全部查询，随意设置true，后台public List<StCode> getStByCode(String code)会过滤code参数
+
+<!--查询条件-->
+<input type="search" placeholder="请输入企业名称" title="企业名称" name="name" class="form-control" id="stationId" operator="like" likeOption="true">
+sql中where会根据name拼接，所有关联查询时可以改name值
+
+<!--查询条件-->
+默认情况下是HQL,如果xml中用了自定义sql( <sql><![CDATA[。。。]]>)，查询条件中name应改成表字段

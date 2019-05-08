@@ -290,7 +290,7 @@ public interface BaseDao {
 
     int executeSql(String sql,Map<String,Object> param);
 
-    List executeSql4List(String sql,Map<String,Object> param);
+    List executeSql4List(String sql,Map<String,Object> param,boolean transForm);
 
     <T> List<T> getListByCriteria(DetachedCriteria criteria, PageInfo page);
 
