@@ -40,6 +40,18 @@ function loadPage(url, container) {
 }
 
 
+function loadPageIframe(url, container) {
+    console.log(url);
+    if (!container){
+        container = "#main_iframe";
+    }
+
+    if (!url.startWith(basePath)){
+        url = basePath + url;
+    }
+    jQuery(container).attr("src", url);
+}
+
 function loadPageTab(url,tabTitle) {
     // console.log("url",url,"container",container);
     if (!url.startWith(basePath))

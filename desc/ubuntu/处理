@@ -47,3 +47,12 @@ http://172.96.242.63:8080/AdminEAP/#
 
 #查看
 ps -ef|grep java
+
+
+更新
+1.拷贝web，注意数据库连接密码  如果框架有更新，则需要AdminEAP-framework-1.0-SNAPSHOT.jar
+2./usr/apache-tomcat-7.0.79/bin/shutdown.sh
+3.redis清缓存
+    >redis-cli
+    >flushdb
+4./usr/apache-tomcat-7.0.79/bin/startup.sh

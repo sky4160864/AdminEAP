@@ -61,7 +61,7 @@
 			]]>
         </sql>
         <column key="rowIndex" header="序号" width="80"/>
-        <column key="stCode" header="系统编码" classType="String" allowSort="true" width="150" />
+        <!--<column key="stCode" header="系统编码" classType="String" allowSort="true" width="150" />-->
         <column key="name" header="企业名称" classType="String" allowSort="true" width="150"/>
         <column key="mn" header="设备唯一标识" classType="String" allowSort="true" width="150"/>
         <column key="address" header="地址" classType="String" allowSort="true" width="150"/>
@@ -208,5 +208,28 @@
         <column key="ruleName" header="规则名称" classType="String" allowSort="true" width="150"/>
         <column key="ruleContent" header="规则内容" classType="String" allowSort="true" width="150"/>
         <column key="ruleDesc" header="规则描述" classType="String" allowSort="true" width="150"/>
+</query>
+
+
+<!--本xml片段为代码生成器生成，时间：2019-05-09 12:20:26-->
+<query id="jp_sms_record" key="id" tableName="短信记录列表" className="com.cnpc.jpro.entity.SmsRecord" widthType="px">
+        <column key="rowIndex" header="序号" width="80"/>
+        <column key="smsType" header="类型" classType="String" allowSort="true" width="150"/>
+        <column key="smsTime" header="时间" classType="Date" allowSort="true" dateFormat="yyyy-mm-dd hh:ii" operator="between" width="150"/>
+        <column key="stationName" header="企业" classType="String" allowSort="true" width="150"/>
+        <!--<column key="smsRid" header="关联ID" classType="String" allowSort="true" width="150"/>-->
+        <column key="smsContent" header="短信内容" classType="String" allowSort="true" width="150"/>
+        <column key="smsLink" header="联系人" classType="String" allowSort="true" width="150"/>
+        <column key="telephone" header="号码" classType="String" allowSort="true" width="150"/>
+        <column key="smsStatus" header="状态" classType="String" allowSort="true" width="150"/>
+</query>
+
+
+<!--本xml片段为代码生成器生成，时间：2019-05-09 13:03:59-->
+<query id="jp_link_record" key="id" tableName="通讯录列表" className="com.cnpc.jpro.entity.LinkRecord" widthType="px">
+        <column key="rowIndex" header="序号" width="80"/>
+        <column key="stationId" header="企业" classType="String" allowSort="true" width="150"/>
+        <column key="smsLink" header="联系人" classType="String" allowSort="true" width="150"/>
+        <column key="telephone" header="号码" classType="String" allowSort="true" width="150"/>
 </query>
 </queryContext>

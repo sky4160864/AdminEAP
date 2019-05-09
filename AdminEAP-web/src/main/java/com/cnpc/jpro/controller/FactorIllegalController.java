@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 工况历史数据-分钟数据
+ * 违规
  */
 @Controller
 @RequestMapping("/factor_illegal")
@@ -46,7 +46,7 @@ public class FactorIllegalController {
     @RequestMapping(value="/get_data",method = RequestMethod.GET)
     @ResponseBody
     public Result2 getHisData(String mn, String btime, String etime, int page, int limit){
-        String sql = "select c.name,b.rule_name,rule_desc,a.mn,DATE_FORMAT(a.mtime,'%Y-%m-%d %H') mtime\n"
+        String sql = "select c.name,b.rule_name,rule_desc,a.mn,DATE_FORMAT(a.mtime,'%Y-%m-%d %H:%i') mtime\n"
                 + "from jp_factor_illegal a\n"
                 + "\tINNER JOIN jp_factor_rule b on(a.rule_id=b.id)\n"
                 + "\tINNER JOIN jp_station_info c on(c.id=b.station_id)"
@@ -74,6 +74,29 @@ public class FactorIllegalController {
 
         Result2 result = new Result2(true);
         result.setCount((listCount!=null&&listCount.size()>0)?listCount.get(0):0);
+        result.setData(listList);
+        return result;
+    }
+
+
+    @RequestMapping(value="/monitor_data",method = RequestMethod.GET)
+    @ResponseBody
+    public Result2 getMonitorData(String mn, String mtime){
+        if(StringUtils.isNullOrEmpty(mn)||StringUtils.isNullOrEmpty(mtime)){
+            return new Result2(false);
+        }
+
+        String sql = "select a.factor_name,0+convert(b.val_avg,char) val,a.factor_unit,a.lower_limit,a.upper_limit\n"
+                + "from jp_factor_relation a\n"
+                + "INNER JOIN jp_monitor_minute b on(a.mn=b.mn and a.factor_code=b.factor_code)\n"
+                + "where a.mn=:mn\n"
+                + "\tand mtime=DATE_FORMAT(:mtime,'%Y-%m-%d %H:%i')";
+
+        Map<String,Object> params = new HashMap<>();
+        params.put("mn",mn);
+        params.put("mtime",mtime);
+        Result2 result = new Result2(true);
+        List listList = baseService.executeSql4List(sql,params,true);
         result.setData(listList);
         return result;
     }

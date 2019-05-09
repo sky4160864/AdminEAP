@@ -1,0 +1,94 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><li class="fa fa-remove"></li></button>
+    <h5 class="modal-title"></h5>
+</div>
+
+<div class="modal-body">
+    <form id="link_record_form" name="link_record_form" class="form-horizontal">
+        <input type="hidden" name="id">
+        <input type="hidden" name="version">
+        <input type="hidden" name="createDateTime" data-flag="date" data-format="yyyy-mm-dd hh:ii:ss">
+        <input type="hidden" name="deleted" value="0">
+        <input type='hidden' value="${CSRFToken}" id='csrftoken'>
+        <div class="box-body">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">企业ID</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="stationId" name="stationId" placeholder="请填写企业ID">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">联系人<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="smsLink" name="smsLink" placeholder="请填写联系人">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">号码<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="telephone" name="telephone" placeholder="请填写号码">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer text-right">
+            <button type="button" class="btn btn-default" data-btn-type="cancel" data-dismiss="modal">取消</button>
+            <button type="submit" class="btn btn-primary" data-btn-type="save">提交</button>
+        </div>
+    </form>
+</div>
+<script>
+    var form;
+    var id="${id?default(0)}";
+    $(function(){
+        //初始化表单
+        form=$("#link_record_form").form();
+        //数据校验
+        $("#link_record_form").bootstrapValidator({
+            message : '请输入有效值',
+            feedbackIcons : {
+                valid : 'glyphicon glyphicon-ok',
+                invalid : 'glyphicon glyphicon-remove',
+                validating : 'glyphicon glyphicon-refresh'
+            },
+            submitHandler : function() {
+                modals.confirm('确认保存？', function() {
+                    var link_record = form.getFormSimpleData();
+                    ajaxPost(basePath+'/link_record/save',link_record, function(data) {
+                        if(data.success){
+                            if(id!="0"){
+                                modals.hideWin(winId);
+                                link_recordTable.reloadRowData(id);
+                            }else{
+                                modals.hideWin(winId);
+                                link_recordTable.reloadData();
+                            }
+                        }
+                    });
+                });
+            },
+            fields : {
+                "smsLink":{
+                    validators:{
+                        notEmpty:{message:'联系人不能为空'}
+                    }
+                },
+                "telephone":{
+                    validators:{
+                        notEmpty:{message:'号码不能为空'}
+                    }
+                }
+            }
+        });
+        //初始化控件
+        form.initComponent();
+        //编辑回填
+        if(id!=0){
+            ajaxPost(basePath+"/link_record/get/"+id,null,function(data){
+                form.initFormData(data);
+            })
+        }
+    });
+
+</script>

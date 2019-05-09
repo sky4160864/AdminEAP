@@ -1,0 +1,151 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><li class="fa fa-remove"></li></button>
+    <h5 class="modal-title"></h5>
+</div>
+
+<div class="modal-body">
+    <form id="sms_record_form" name="sms_record_form" class="form-horizontal">
+        <input type="hidden" name="id">
+        <input type="hidden" name="version">
+        <input type="hidden" name="createDateTime" data-flag="date" data-format="yyyy-mm-dd hh:ii:ss">
+        <input type="hidden" name="deleted" value="0">
+        <input type='hidden' value="${CSRFToken}" id='csrftoken'>
+        <div class="box-body">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">类型<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="smsType" name="smsType" placeholder="请填写类型">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">时间<span style="color:red">*</span></label>
+                    <div class="input-group col-sm-8">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input type="text" placeholder="请填写时间" name="smsTime" id="smsTime" data-flag="datepicker" class="form-control" data-format="yyyy-mm-dd">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">关联ID</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="smsRid" name="smsRid" placeholder="请填写关联ID">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">短信内容<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="smsContent" name="smsContent" placeholder="请填写短信内容">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">企业<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="stationName" name="stationName" placeholder="请填写企业">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">发送人<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="smsLink" name="smsLink" placeholder="请填写发送人">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">号码<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="telephone" name="telephone" placeholder="请填写号码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">状态<span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="smsStatus" name="smsStatus" placeholder="请填写状态">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer text-right">
+            <button type="button" class="btn btn-default" data-btn-type="cancel" data-dismiss="modal">取消</button>
+            <button type="submit" class="btn btn-primary" data-btn-type="save">提交</button>
+        </div>
+    </form>
+</div>
+<script>
+    var form;
+    var id="${id?default(0)}";
+    $(function(){
+        //初始化表单
+        form=$("#sms_record_form").form();
+        //数据校验
+        $("#sms_record_form").bootstrapValidator({
+            message : '请输入有效值',
+            feedbackIcons : {
+                valid : 'glyphicon glyphicon-ok',
+                invalid : 'glyphicon glyphicon-remove',
+                validating : 'glyphicon glyphicon-refresh'
+            },
+            submitHandler : function() {
+                modals.confirm('确认保存？', function() {
+                    var sms_record = form.getFormSimpleData();
+                    ajaxPost(basePath+'/sms_record/save',sms_record, function(data) {
+                        if(data.success){
+                            if(id!="0"){
+                                modals.hideWin(winId);
+                                sms_recordTable.reloadRowData(id);
+                            }else{
+                                modals.hideWin(winId);
+                                sms_recordTable.reloadData();
+                            }
+                        }
+                    });
+                });
+            },
+            fields : {
+                "smsType":{
+                    validators:{
+                        notEmpty:{message:'类型不能为空'}
+                    }
+                },
+                "smsTime":{
+                    validators:{
+                        notEmpty:{message:'时间不能为空'},
+date:{format:$(this).data('format'),message:'请输入有效时间'}
+                    }
+                },
+                "smsContent":{
+                    validators:{
+                        notEmpty:{message:'短信内容不能为空'}
+                    }
+                },
+                "stationName":{
+                    validators:{
+                        notEmpty:{message:'企业不能为空'}
+                    }
+                },
+                "smsLink":{
+                    validators:{
+                        notEmpty:{message:'发送人不能为空'}
+                    }
+                },
+                "telephone":{
+                    validators:{
+                        notEmpty:{message:'号码不能为空'}
+                    }
+                },
+                "smsStatus":{
+                    validators:{
+                        notEmpty:{message:'状态不能为空'}
+                    }
+                }
+            }
+        });
+        //初始化控件
+        form.initComponent();
+        //编辑回填
+        if(id!=0){
+            ajaxPost(basePath+"/sms_record/get/"+id,null,function(data){
+                form.initFormData(data);
+            })
+        }
+    });
+
+</script>
