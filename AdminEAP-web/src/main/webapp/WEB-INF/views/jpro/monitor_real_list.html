@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<section class="content-header">
+    <h1>
+        实时数据<small>列表</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="${basePath}"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">监控分析</a></li>
+        <li class="active">实时数据</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div style="margin-top: 8px;margin-left: 5px;padding-bottom: 8px;">
+                    <!--<div class="demoTable" >
+                        <div class="layui-form">
+                            <button class="layui-btn" data-type="init" style="background-color:#2B8CB9">刷新</button>
+                        </div>
+                    </div>-->
+                    <table class="layui-hide" id="lay_table_ent" lay-filter="lay_filter_ent"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/html" id="m_status_tpl">
+        {{#  if(d.m_status === '断网'){ }}
+        <span style="color: #FF0000;">{{ d.m_status }}</span>
+        {{#  } else { }}
+        <span style="color: #2E8B57;">{{ d.m_status }}</span>
+        {{#  } }}
+    </script>
+    <script type="text/html" id="c_status_tpl">
+        {{#  if(d.c_status === '异常'){ }}
+        <span style="color: #FF0000;">{{ d.c_status }}</span>
+        {{#  } else { }}
+
+        {{#  } }}
+    </script>
+    <script>
+        layui.use(['table','layer'], function(){
+            var table_cols=[[
+                //{field:'id',title:'序号',fixed: 'left'},
+                {field:'name',title:'企业名称'}
+                ,{field:'mtime', title:'时间'}
+                ,{field:'m_status', title:'网络',templet: '#m_status_tpl'}
+                ,{field:'c_status', title:'状态',templet: '#c_status_tpl'}
+
+            ]];
+            var table = layui.table;
+            var $ = layui.$, active = {
+                init:function () {
+                    //方法级渲染
+                    table.render({
+                        elem: '#lay_table_ent'
+                        ,url: '${basePath}/monitor_real/last_data'
+                        ,cols: table_cols
+                        ,id: 'testReload'
+                        //,page: true
+                        ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+                            //console.log(res);
+                            //console.log(json_data);
+                            return {
+                                "code": 0, //解析接口状态
+                                "data": res.data //解析数据列表
+                            };
+                        }
+                        ,text: {
+                            none: '暂无相关数据' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
+                        }
+
+                    });
+                }
+            };
+            /*$('.demoTable .layui-btn').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });*/
+
+            active['init'].call(this);
+
+
+            var width = document.body.offsetWidth;
+            var wdithpx = (width / 2 - 37 / 2);
+            //监听行双击事件
+            var layer = layui.layer;
+            table.on('rowDouble(lay_filter_ent)', function(obj) {
+                layer.alert('<table class="layui-hide" id="alert_data"></table>', {
+                    title: '异常分析：'
+                    //,offset: 'auto'
+                    ,offset: ['25%', '25%']
+                    //,offset: 'auto'
+                    //,offset: ['50%', wdithpx]
+                    ,btn: []
+                });
+                //方法级渲染
+                table.render({
+                    elem: '#alert_data'
+                    ,url: '${basePath}/factor_illegal/get_data'
+                    , cols: [[
+                        //{field:'name', title:'企业名称', width:250,fixed: 'left'},
+                        {field:'mtime', title:'时间', width:180}
+                        ,{field:'rule_name', title:'规则名称', width:180}
+                        ,{field:'rule_desc', title:'规则描述'}
+                    ]]
+                    , id: 'alert_data_id'
+                    ,page: true
+                    ,request: {
+                        //pageName: 'curr' //页码的参数名称，默认：page
+                        //,limitName: 'nums' //每页数据量的参数名，默认：limit
+                    }
+                    ,where: {
+                        mn:obj.data.mn,
+                        //btime: $('#btime').val(),
+                        //etime: $('#etime').val()
+                    }
+                    ,autoSort: false //禁用前端自动排序。
+                    ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+                        //console.log(res);
+                        return {
+                            "code": 0, //解析接口状态
+                            "msg": res.message, //解析提示文本
+                            "count": res.count, //解析数据长度
+                            "data": res.data //解析数据列表
+                        };
+                    }
+                    ,text: {
+                        none: '暂无相关数据' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
+                    }
+                });
+
+            });
+            //监听行双击事件END
+        });
+    </script>
+
+</section>
+
+
