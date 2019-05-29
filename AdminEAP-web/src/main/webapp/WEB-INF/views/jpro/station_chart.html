@@ -169,7 +169,7 @@
                 }
             }
         };
-        myChart.setOption(option);
+//        myChart.setOption(option,true);
 
         $('.demoTable .layui-btn').on('click', function(){
 
@@ -189,7 +189,7 @@
                     option["series"]=series_data;
                     //option["dataZoom"]=dataZoom;
                     // 使用刚指定的配置项和数据显示图表。
-                    myChart.setOption(option);
+                    myChart.setOption(option,true); //true重新渲染
                 }
             });
         });
