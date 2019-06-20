@@ -56,7 +56,7 @@ https://jingyan.baidu.com/article/49ad8bce97bd965834d8fa8b.html
 数据备份
 mkdir /usr/backup
 cd /usr/backup
-mysqldump -uroot -p1234 admineap | gzip >admineap_"`date +%Y%m%d`".sql.gz
+mysqldump -uroot -p1234 admineap | gzip >e:/admineap_"`date +%Y%m%d`".sql.gz
 
 
 
