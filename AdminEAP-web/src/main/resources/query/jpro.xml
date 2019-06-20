@@ -151,6 +151,8 @@
         <column key="entName" header="企业名称" classType="String" allowSort="true" width="150"/>
         <column key="mn" header="设备唯一标识" classType="String" allowSort="true" width="150" hidden="true"/>
         <column key="mtime" header="时间" classType="String" allowSort="true" width="150"/>
+        <column key="a21005" header="流量" classType="String" allowSort="true" width="150"/>
+        <column key="a21024" header="液位" classType="String" allowSort="true" width="150"/>
         <column key="a21026" header="二氧化硫" classType="String" allowSort="true" width="150" fnRender="fnRenderMonitor1"/>
         <column key="a21026Zs" header="二氧化硫折算值" classType="String" allowSort="true" width="150" />
         <column key="a21002" header="氮氧化物" classType="String" allowSort="true" width="150" fnRender="fnRenderMonitor2"/>
@@ -162,10 +164,10 @@
         <column key="a01013" header="烟气压力" classType="String" allowSort="true" width="150"/>
         <column key="a01011" header="烟气流速" classType="String" allowSort="true" width="150"/>
         <column key="a00000" header="废气" classType="String" allowSort="true" width="150"/>
-        <column key="a21005" header="一氧化碳" classType="String" allowSort="true" width="150"/>
+        <!--<column key="a21005" header="一氧化碳" classType="String" allowSort="true" width="150"/>
         <column key="a21005Zs" header="CO折算浓度" classType="String" allowSort="true" width="150"/>
         <column key="a21024" header="氯化氢" classType="String" allowSort="true" width="150"/>
-        <column key="a21024Zs" header="HCL折算浓度" classType="String" allowSort="true" width="150"/>
+        <column key="a21024Zs" header="HCL折算浓度" classType="String" allowSort="true" width="150"/>-->
         <column key="a01014" header="烟气湿度" classType="String" allowSort="true" width="150"/>
         <column key="net_status" header="网络状态" classType="String" allowSort="true" width="150" fnRender="fnRenderNet"/>
 </query>

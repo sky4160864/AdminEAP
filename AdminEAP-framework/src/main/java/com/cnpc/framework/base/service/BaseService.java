@@ -299,6 +299,14 @@ public interface BaseService {
 
     Long countBySql(String sql, Object[] params, Type[] types);
 
+    /**
+     *
+     * @param sql
+     * @param params
+     * @param types
+     * @param clazz 配置clazz则返回对象，否则返回msp<字段名,值>
+     * @return
+     */
     List findMapBySql(String sql, Object[] params, Type[] types, Class clazz);
     <T> List<T> find(String sql, Map<String,Object> params, Class<T> clazz);
 
